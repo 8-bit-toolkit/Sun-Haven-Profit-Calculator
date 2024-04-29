@@ -1,0 +1,216 @@
+<!--
+Confirm how totems stack with other totems and fertilizers
+-->
+
+<html>
+<head>
+    <!-- <script type="module" src="./crops.js"></script> -->
+    <!-- <script src="https://d3js.org/d3.v6.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="./sunHavenProfitCalculator.js"></script>
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+<form class="configs-form">
+    <div class="configs-container">
+        <div class="configs content-box">
+            <div class="configs__config crops-region">
+                <p class="config-label">
+                    What region's crops do you want to calculate?
+                </p>
+                <select class="config-select crops-region-select">
+                    <option value="sunHaven" selected>Sun Haven</option>
+                    <option value="nelvari">Nel'Vari</option>
+                    <option value="withergate">Withergate</option>
+                </select>
+            </div>
+            <div class="configs__config planting-date">
+                    <p class="config-label">
+                        What day are you planting?
+                    </p>
+                    <select class="config-select planting-day-select">
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                    </select>
+                    <select class="config-select planting-season-select">
+                        <option value="0" selected>Spring</option>
+                        <option value="1">Summer</option>
+                        <option value="2">Fall</option>
+                        <option value="3">Winter</option>
+                    </select>
+                </div>
+            <div class="configs__config days-amount">
+                    <p class="config-label">
+                        How Many Days?
+                    </p>
+                    <input type="number" class="days-amount-input" min="1" max="999" value="1"/>
+                </div>
+            <div class="configs__config crops-amount">
+                    <p class="config-label">
+                        How Many Crops Will You Plant?
+                    </p>
+                    <input type="number" class="crops-amount-input" min="1" max="999" value="1"/>
+                </div>
+            <div class="configs__config fertilizer">
+                <p class="config-label">
+                    Will Fertilizer be used?
+                </p>
+                <select class="config-select fertilizer-select">
+                    <option value="none" selected>No Fertilizer</option>
+                    <option value="slime">Slime (5% extra crop chance when harvested)</option>
+                    <option value="simpleFire">Simple Fire (30% increased growth speed)</option>
+                    <option value="simpleEarth">Simple Earth (15% extra crop chance when harvested)</option>
+                    <option value="simpleMagic">Simple Magic (15% extra crop chance when harvested, 30% increased growth speed)</option>
+                    <option value="advFire">Advanced Fire (50% increased growth speed)</option>
+                    <option value="advEarth">Advanced Earth (25% extra crop chance when harvested)</option>
+                    <option value="advMagic">Advanced Magic (25% extra crop chance when harvested, 50% increased growth speed)</option>
+                    <option value="other">Other (Other fertilizers only affect profit/xp by triggering "Fertile land" skill)</option>
+                </select>
+            </div>
+            <div class="configs__config totem">
+                <p class="config-label">
+                    Will a Totem be used?
+                </p>
+                <select class="config-select totem-select">
+                    <option value="none" selected>No Totems</option>
+                    <option value="fireFertilizer">Fire Fertilizer Totem (15% increased growth speed)</option>
+                    <option value="spring">Spring Totem (4% extra crop chance when harvested)</option>
+                    <option value="farming">Farming Totem (Extra 2 farming xp per harvest)</option>
+                </select>
+            </div>
+            <div class="configs__config tiller-tip">
+                    <select class="config-select tiller-tip-select">
+                        <option value="0" selected>0</option>
+                        <option value="4">1</option>
+                        <option value="10">2</option>
+                        <option value="14">3</option>
+                    </select>
+                    <p class="config-label select-label">
+                        Tiller Tip Level? (provides 0 / 4 / 10 / 14 extra gold per crop sold)
+                    </p>
+                </div>
+            <div class="configs__config propagation">
+                    <select class="config-select propagation-select">
+                        <option value="0" selected>0</option>
+                        <option value="0.04">1</option>
+                        <option value="0.06">2</option>
+                        <option value="0.08">3</option>
+                    </select>
+                    <p class="config-label select-label">
+                        Propagation Level? (provides 0% / 4% / 6% / 8% chance of an extra crop when harvesting)
+                    </p>
+                </div>
+            <div class="configs__config fertile-land">
+                    <select class="config-select fertile-land-select">
+                        <option value="0" selected>0</option>
+                        <option value="0.04">1</option>
+                        <option value="0.08">2</option>
+                        <option value="0.12">3</option>
+                    </select>
+                    <p class="config-label select-label">
+                        Fertile Land Level? (provides 0% / 4% / 8% / 12% chance of an extra crop when harvesting crops that are fertilized)
+                    </p>
+                </div>
+            <div class="configs__config ignore">
+                    <div class="ignore__config ignore-seasons">
+                        <input type="checkbox" class="ignore-seasons-input" />
+                        <p class="config-label checkbox-label">
+                            Ignore Seasons (Check this if determining profits for a greenhouse setting where seasons will not change)
+                        </p>
+                    </div>
+                    <div class="ignore__config ignore-grapes">
+                        <input type="checkbox" class="ignore-grapes-input" />
+                        <p class="config-label checkbox-label">
+                            Exclude Grapes (Check this if you want to exclude Grapes from the calculator - Grapes cost daily mana to grow)
+                        </p>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="submit-container">
+        <button class="submit-button">
+            Update Graph
+        </button>
+    </div>
+</form>
+
+<div class="graph-wrapper">
+    <div class="graph-buttons">
+        <button class="profits-button">
+            Show Profits
+        </button>
+        <button class="experience-button">
+            Show Farming Experience
+        </button>
+    </div>
+    <div class="graph-container">
+        <div id="my_dataviz"></div>
+    </div>
+</div>
+
+<div class="disclaimers-container">
+    <div class="disclaimers content-box">
+        <p class="disclaimers__assumptions">
+            This calculator assumes:
+        </p>
+        <ul>
+            <li>
+                You are not processing crops into seeds and replanting them
+            </li>
+            <li>
+                You are buying seeds at their normal price (no sales/discounts)
+            </li>
+            <li>
+                You harvest crops when they are grown, sell them, then replant the same amount of those crops THE SAME DAY
+            </li>
+            <li>
+                Fertilizers and Totems may stack but multiple Totems with similar effects cannot stack
+            </li>
+            <li>
+                Any specified Fertilizer or Totems affect ALL crops in the calculation
+            </li>
+            <li>
+                Fertilizers and Totems applied to crops that regrow, only affect the INITIAL harvest, not subsequent ones (I've personally confirmed this for "growth rate" fertilizers/totems, but need dev confirmation for "extra crop chance" fertilizers/totems)
+            </li>
+            <li>
+                ^ Related to the above, a crop that regrows that has been fertilized will STILL activate the "Fertile Land" skill even if that fertilizer is doing nothing (also need dev confirmation on this)
+            </li>
+            <li>
+                When determining crop growth speed and extra harvest chance: any relevant Skills, Totems, or Fertilizers have their effects applied to the base crop numbers in an additive manner rather than multiplicative
+            </li>
+            <li>
+                This calculator determines an AVERAGE profit rounded to 2 decimal places (many skills/totems/fertilizers give a "chance" to get extra crops, so your personal results may differ from these averages)
+            </li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

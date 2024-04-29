@@ -1,0 +1,124 @@
+body {
+    background-image: url('./images/assets/background.webp');
+}
+
+#my_dataviz {
+    visibility: hidden;
+    display: inline-block;
+    position: relative;
+    background: rgba(0, 0, 0, .5);
+    margin: 10px;
+    border-radius: 10px;
+
+    .tick, .domain {
+        color: white
+    }
+}
+
+.title-image-container {
+    text-align: center;
+    .title-image {
+        width: 30%;
+    }
+}
+
+.configs-container {
+    text-align: center;
+}
+
+.configs {
+    margin: 30px 0 0 0;
+    text-align: left;
+    display: inline-block;
+
+    .config-label {
+        margin: 0 0 10px 0;
+    }
+
+    .configs__config {
+        margin: 15px 0;
+
+        .ignore__config {
+            margin: 5px 0;
+            input[type="checkbox"] {
+                margin: 0 4px 4px 4px;
+            }
+        }
+
+        .checkbox-label, .select-label {
+            display: inline;
+            margin: 0;
+        }
+    }
+}
+
+.content-box {
+    background: rgba(0, 0, 0, .5);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    color: white;
+}
+
+.disclaimers-container, .submit-container, .graph-wrapper {
+    text-align: center;
+}
+
+.graph-wrapper {
+    position: relative;
+
+    .graph-tooltip {
+        text-align: left;
+        .posProfit {
+            color: lime;
+        }
+        .negProfit {
+            color: red;
+        }
+        .graph-tooltip__label, .graph-tooltip__image {
+            display: inline;
+        }
+        .graph-tooltip__label {
+            position: relative;
+            bottom: 15px;
+            font-size: 25px;
+            left: 10px;
+        }
+        .graph-tooltip__crop-image {
+            height: 50px;
+            width: 50px;
+            margin: 5px 0 0 5px;
+        }
+
+        .graph-tooltip__currency {
+            height: 35px;
+            width: 35px;
+            margin: 0 5px;
+            position: relative;
+            bottom: -8px;
+        }
+
+        .graph-tooltip__list {
+            list-style: none;
+            margin: 0 0 0 5px;
+            padding: 0;
+        }
+    }
+}
+
+.graph-buttons {
+    visibility: hidden;
+}
+
+.disclaimers-container {
+    visibility: hidden;
+    .disclaimers {
+        display: inline-block;
+        text-align: left;
+    }
+}
+
+.submit-button {
+    width: 200px;
+    height: 100px;
+}
