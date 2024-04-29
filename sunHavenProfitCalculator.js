@@ -321,7 +321,7 @@ window.onload = () => {
         const propagationModifier = Number($propagationLevel.value);
         const fertileLandModifier = $fertilizer.value !== 'none' ? Number($fertileLandLevel.value) : 0;
 
-        const totalChanceToGetExtraRegrowCrop = propagationModifier + fertileLandModifier;
+        const totalChanceToGetExtraRegrowCrop = propagationModifier; //  + fertileLandModifier;
         const totalChanceToGetExtraCrop = fertilizerModifier + totemModifier + propagationModifier + fertileLandModifier;
 
         const normalCrops = (crop.cropsPerHarvest * numberOfHarvests);
