@@ -1,5 +1,6 @@
 body {
-    background-image: url('./images/assets/background.webp');
+    background: #000000 no-repeat center top fixed;
+    background-size: cover;
 }
 
 #my_dataviz {
