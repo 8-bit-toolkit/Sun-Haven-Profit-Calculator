@@ -4,8 +4,7 @@ body {
 }
 
 #my_dataviz {
-    visibility: hidden;
-    display: inline-block;
+    display: none;
     position: relative;
     background: rgba(0, 0, 0, .5);
     margin: 10px;
@@ -34,6 +33,7 @@ body {
 
     .config-label {
         margin: 0 0 10px 0;
+        display: block;
     }
 
     .configs__config {
@@ -108,11 +108,11 @@ body {
 }
 
 .graph-buttons {
-    visibility: hidden;
+    display: none;
 }
 
 .disclaimers-container {
-    visibility: hidden;
+    display: none;
     .disclaimers {
         display: inline-block;
         text-align: left;

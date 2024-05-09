@@ -16,20 +16,20 @@ Confirm how totems stack with other totems and fertilizers
     <div class="configs-container">
         <div class="configs content-box">
             <div class="configs__config crops-region">
-                <p class="config-label">
+                <label class="config-label" for="cropsRegionSelect">
                     What region's crops do you want to calculate?
-                </p>
-                <select class="config-select crops-region-select">
+                </label>
+                <select class="config-select crops-region-select" name="cropsRegionSelect" id="cropsRegionSelect">
                     <option value="sunHaven" selected>Sun Haven</option>
                     <option value="nelvari">Nel'Vari</option>
                     <option value="withergate">Withergate</option>
                 </select>
             </div>
             <div class="configs__config planting-date">
-                    <p class="config-label">
+                    <label class="config-label" for="plantingDaySelect">
                         What day are you planting?
-                    </p>
-                    <select class="config-select planting-day-select">
+                    </label>
+                    <select class="config-select planting-day-select" name="plantingDaySelect" id="plantingDaySelect">
                         <option value="1" selected>1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -67,22 +67,22 @@ Confirm how totems stack with other totems and fertilizers
                     </select>
                 </div>
             <div class="configs__config days-amount">
-                    <p class="config-label">
-                        How Many Days?
-                    </p>
-                    <input type="number" class="days-amount-input" min="1" max="999" value="1"/>
+                    <label class="config-label" for="daysAmountInput">
+                        How Many Days should the calculator run for?
+                    </label>
+                    <input type="number" class="days-amount-input" min="1" max="999" value="1" name="daysAmountInput" id="daysAmountInput"/>
                 </div>
             <div class="configs__config crops-amount">
-                    <p class="config-label">
+                    <label class="config-label" for="cropsAmountInput">
                         How Many Crops Will You Plant?
-                    </p>
-                    <input type="number" class="crops-amount-input" min="1" max="999" value="1"/>
+                    </label>
+                    <input type="number" class="crops-amount-input" min="1" max="999" value="1" name="cropsAmountInput" id="cropsAmountInput"/>
                 </div>
             <div class="configs__config fertilizer">
-                <p class="config-label">
+                <label class="config-label" for="fertilizerSelect">
                     Will Fertilizer be used?
-                </p>
-                <select class="config-select fertilizer-select">
+                </label>
+                <select class="config-select fertilizer-select" name="fertilizerSelect" id="fertilizerSelect">
                     <option value="none" selected>No Fertilizer</option>
                     <option value="slime">Slime (5% extra crop chance when harvested)</option>
                     <option value="simpleFire">Simple Fire (30% increased growth speed)</option>
@@ -95,9 +95,9 @@ Confirm how totems stack with other totems and fertilizers
                 </select>
             </div>
             <div class="configs__config totem">
-                <p class="config-label">
-                    Will a Totem be used?
-                </p>
+                <label class="config-label">
+                    Will Totems be used?
+                </label>
                 <select class="config-select totem-select">
                     <option value="none" selected>No Totems</option>
                     <option value="fireFertilizer">Fire Fertilizer Totem (15% increased growth speed)</option>
@@ -106,50 +106,50 @@ Confirm how totems stack with other totems and fertilizers
                 </select>
             </div>
             <div class="configs__config tiller-tip">
-                    <select class="config-select tiller-tip-select">
+                    <select class="config-select tiller-tip-select" name="tillerTipSelect" id="tillerTipSelect">
                         <option value="0" selected>0</option>
                         <option value="4">1</option>
                         <option value="10">2</option>
                         <option value="14">3</option>
                     </select>
-                    <p class="config-label select-label">
+                    <label class="config-label select-label" for="tillerTipSelect">
                         Tiller Tip Level? (provides 0 / 4 / 10 / 14 extra gold per crop sold)
-                    </p>
+                    </label>
                 </div>
             <div class="configs__config propagation">
-                    <select class="config-select propagation-select">
+                    <select class="config-select propagation-select" name="propagationSelect" id="propagationSelect">
                         <option value="0" selected>0</option>
                         <option value="0.04">1</option>
                         <option value="0.06">2</option>
                         <option value="0.08">3</option>
                     </select>
-                    <p class="config-label select-label">
+                    <label class="config-label select-label" for="propagationSelect">
                         Propagation Level? (provides 0% / 4% / 6% / 8% chance of an extra crop when harvesting)
-                    </p>
+                    </label>
                 </div>
             <div class="configs__config fertile-land">
-                    <select class="config-select fertile-land-select">
+                    <select class="config-select fertile-land-select" name="fertileLandSelect" id="fertileLandSelect">
                         <option value="0" selected>0</option>
                         <option value="0.04">1</option>
                         <option value="0.08">2</option>
                         <option value="0.12">3</option>
                     </select>
-                    <p class="config-label select-label">
+                    <label class="config-label select-label" for="fertileLandSelect">
                         Fertile Land Level? (provides 0% / 4% / 8% / 12% chance of an extra crop when harvesting crops that are fertilized)
-                    </p>
+                    </label>
                 </div>
             <div class="configs__config ignore">
                     <div class="ignore__config ignore-seasons">
-                        <input type="checkbox" class="ignore-seasons-input" />
-                        <p class="config-label checkbox-label">
+                        <input type="checkbox" class="ignore-seasons-input" name="ignoreSeasons" id="ignoreSeasons"/>
+                        <label class="config-label checkbox-label" for="ignoreSeasons">
                             Ignore Seasons (Check this if determining profits for a greenhouse setting where seasons will not change)
-                        </p>
+                        </label>
                     </div>
-                    <div class="ignore__config ignore-grapes">
+                    <div class="ignore__config ignore-grapes" name="ignoreGrapes" id="ignoreGrapes">
                         <input type="checkbox" class="ignore-grapes-input" />
-                        <p class="config-label checkbox-label">
+                        <label class="config-label checkbox-label" for="ignoreGrapes">
                             Exclude Grapes (Check this if you want to exclude Grapes from the calculator - Grapes cost daily mana to grow)
-                        </p>
+                        </label>
                     </div>
                 </div>
         </div>

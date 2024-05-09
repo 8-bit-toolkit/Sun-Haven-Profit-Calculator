@@ -1,6 +1,8 @@
 // import { default as crops } from './crops';
 
 /*
+ * Update totems to have multiple selectable
+ * ROI daily math
  * Make shit pretty - get title - change graph buttons to be pretty - commission snaccoon monopoly man
  * Test it a bunch
  * Ask questions in discords - make gifs of prototype to share
@@ -389,9 +391,9 @@ window.onload = () => {
         currentRegion = $cropsRegion.value;
 
         // hide the grid and related buttons
-        $disclaimers.style.visibility = 'hidden';
-        $graphButtons.style.visibility = 'hidden';
-        $grid.style.visibility = 'hidden';
+        $disclaimers.style.display = 'none';
+        $graphButtons.style.display = 'none';
+        $grid.style.display = 'none';
 
         if(currentRegion === 'sunHaven'){
             // show sun haven-specific inputs
@@ -415,9 +417,9 @@ window.onload = () => {
             $configsForm.reportValidity()
         } else {
             event.preventDefault();
-            $disclaimers.style.visibility = 'visible';
-            $graphButtons.style.visibility = 'visible';
-            $grid.style.visibility = 'visible';
+            $disclaimers.style.display = 'block';
+            $graphButtons.style.display = 'block';
+            $grid.style.display = 'inline-block';
 
             // iterate through each crop
             let cropsListAfterMath = JSON.parse(cropsMap[currentRegion].cropsJSON).map(crop => {
