@@ -1,3 +1,8 @@
+/*
+ * HACK: I know I'm not using css nesting :( I don't feel like using a css preprocessor like sass for something this
+ * small and I don't want people on pre-2023 browsers to have a bad experience. No, I'm not proud. Yes, this is
+ * sunk-cost fallacy.
+ */
 body {
     background: #000000 no-repeat center top fixed;
     background-size: cover;
@@ -9,17 +14,19 @@ body {
     background: rgba(0, 0, 0, .5);
     margin: 10px;
     border-radius: 10px;
+}
 
-    .tick, .domain {
-        color: white
-    }
+#my_dataviz .tick, #my_dataviz .domain {
+    color: white
 }
 
 .title-image-container {
     text-align: center;
-    .title-image {
-        width: 30%;
-    }
+}
+
+.title-image-container .title-image {
+    width: 800px;
+    height: 425px;
 }
 
 .configs-container {
@@ -30,27 +37,28 @@ body {
     margin: 30px 0 0 0;
     text-align: left;
     display: inline-block;
+}
 
-    .config-label {
-        margin: 0 0 10px 0;
-        display: block;
-    }
+.configs .config-label {
+    margin: 0 0 10px 0;
+    display: block;
+}
 
-    .configs__config {
-        margin: 15px 0;
+.configs .configs__config {
+    margin: 15px 0;
+}
 
-        .ignore__config {
-            margin: 5px 0;
-            input[type="checkbox"] {
-                margin: 0 4px 4px 4px;
-            }
-        }
+.configs .configs__config .ignore__config {
+    margin: 5px 0;
+}
 
-        .checkbox-label, .select-label {
-            display: inline;
-            margin: 0;
-        }
-    }
+.configs .configs__config .ignore__config input[type="checkbox"] {
+    margin: 0 4px 4px 4px;
+}
+
+.configs .configs__config .checkbox-label, .configs .configs__config .select-label {
+    display: inline;
+    margin: 0;
 }
 
 .content-box {
@@ -67,44 +75,49 @@ body {
 
 .graph-wrapper {
     position: relative;
+}
 
-    .graph-tooltip {
-        text-align: left;
-        .posProfit {
-            color: lime;
-        }
-        .negProfit {
-            color: red;
-        }
-        .graph-tooltip__label, .graph-tooltip__image {
-            display: inline;
-        }
-        .graph-tooltip__label {
-            position: relative;
-            bottom: 15px;
-            font-size: 25px;
-            left: 10px;
-        }
-        .graph-tooltip__crop-image {
-            height: 50px;
-            width: 50px;
-            margin: 5px 0 0 5px;
-        }
+.graph-wrapper .graph-tooltip {
+    text-align: left;
+}
 
-        .graph-tooltip__currency {
-            height: 35px;
-            width: 35px;
-            margin: 0 5px;
-            position: relative;
-            bottom: -8px;
-        }
+.graph-wrapper .graph-tooltip .posProfit {
+    color: lime;
+}
 
-        .graph-tooltip__list {
-            list-style: none;
-            margin: 0 0 0 5px;
-            padding: 0;
-        }
-    }
+.graph-wrapper .graph-tooltip .negProfit {
+    color: red;
+}
+
+.graph-wrapper .graph-tooltip .graph-tooltip__label, .graph-wrapper .graph-tooltip .graph-tooltip__image {
+    display: inline;
+}
+
+.graph-wrapper .graph-tooltip .graph-tooltip__label {
+    position: relative;
+    bottom: 15px;
+    font-size: 25px;
+    left: 10px;
+}
+
+.graph-wrapper .graph-tooltip .graph-tooltip__crop-image {
+    height: 50px;
+    width: 50px;
+    margin: 5px 0 0 5px;
+}
+
+.graph-wrapper .graph-tooltip .graph-tooltip__currency {
+    height: 35px;
+    width: 35px;
+    margin: 0 5px;
+    position: relative;
+    bottom: -8px;
+}
+
+.graph-wrapper .graph-tooltip .graph-tooltip__list {
+    list-style: none;
+    margin: 0 0 0 5px;
+    padding: 0;
 }
 
 .graph-buttons {
@@ -113,13 +126,22 @@ body {
 
 .disclaimers-container {
     display: none;
-    .disclaimers {
-        display: inline-block;
-        text-align: left;
-    }
+}
+
+.disclaimers-container .disclaimers {
+    display: inline-block;
+    text-align: left;
 }
 
 .submit-button {
     width: 200px;
     height: 100px;
+}
+
+/* medium sized screens */
+@media (400px <= width <= 850px) {
+    .title-image-container .title-image {
+        width: 500px;
+        height: 265px;
+    }
 }
