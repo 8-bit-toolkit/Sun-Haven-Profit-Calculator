@@ -17,72 +17,125 @@ Confirm how totems stack with other totems and fertilizers
 <form class="configs-form">
     <div class="configs-container">
         <div class="configs content-box">
-            <div class="configs__config crops-region">
-                <label class="config-label" for="cropsRegionSelect">
-                    What region's crops do you want to calculate?
-                </label>
-                <select class="config-select crops-region-select" name="cropsRegionSelect" id="cropsRegionSelect">
-                    <option value="sunHaven" selected>Sun Haven</option>
-                    <option value="nelvari">Nel'Vari</option>
-                    <option value="withergate">Withergate</option>
-                </select>
+            <div class="configs-columns-container">
+                <div class="configs-column">
+                    <div class="configs__config crops-region">
+                        <label class="config-label" for="cropsRegionSelect">
+                            What region's crops do you want to calculate?
+                        </label>
+                        <select class="config-select crops-region-select" name="cropsRegionSelect" id="cropsRegionSelect">
+                            <option value="sunHaven" selected>Sun Haven</option>
+                            <option value="nelvari">Nel'Vari</option>
+                            <option value="withergate">Withergate</option>
+                        </select>
+                    </div>
+                    <div class="configs__config planting-date">
+                            <label class="config-label" for="plantingDaySelect">
+                                What day are you planting?
+                            </label>
+                            <select class="config-select planting-day-select" name="plantingDaySelect" id="plantingDaySelect">
+                                <option value="1" selected>1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                            </select>
+                            <select class="config-select planting-season-select">
+                                <option value="0" selected>Spring</option>
+                                <option value="1">Summer</option>
+                                <option value="2">Fall</option>
+                                <option value="3">Winter</option>
+                            </select>
+                        </div>
+                    <div class="configs__config days-amount">
+                            <label class="config-label" for="daysAmountInput">
+                                How Many Days should the calculator run for?
+                            </label>
+                            <input type="number" class="days-amount-input" min="1" max="999" value="1" name="daysAmountInput" id="daysAmountInput"/>
+                        </div>
+                    <div class="configs__config crops-amount">
+                        <label class="config-label" for="cropsAmountInput">
+                            How Many Crops Will You Plant?
+                        </label>
+                        <input type="number" class="crops-amount-input" min="1" max="999" value="1" name="cropsAmountInput" id="cropsAmountInput"/>
+                    </div>
+                </div>
+                <div class="configs-column">
+                    <div class="configs__config tiller-tip">
+                        <label class="config-label" for="tillerTipSelect">
+                            Tiller Tip Level? (provides 0 / 4 / 10 / 14 extra gold per crop sold)
+                        </label>
+                        <select class="config-select tiller-tip-select" name="tillerTipSelect" id="tillerTipSelect">
+                            <option value="0" selected>0</option>
+                            <option value="4">1</option>
+                            <option value="10">2</option>
+                            <option value="14">3</option>
+                        </select>
+                    </div>
+                    <div class="configs__config propagation">
+                        <label class="config-label" for="propagationSelect">
+                            Propagation Level? (provides 0% / 4% / 6% / 8% chance of an extra crop when harvesting)
+                        </label>
+                        <select class="config-select propagation-select" name="propagationSelect" id="propagationSelect">
+                            <option value="0" selected>0</option>
+                            <option value="0.04">1</option>
+                            <option value="0.06">2</option>
+                            <option value="0.08">3</option>
+                        </select>
+                    </div>
+                    <div class="configs__config fertile-land">
+                        <label class="config-label" for="fertileLandSelect">
+                            Fertile Land Level? (provides 0% / 4% / 8% / 12% chance of an extra crop when harvesting crops that are fertilized)
+                        </label>
+                        <select class="config-select fertile-land-select" name="fertileLandSelect" id="fertileLandSelect">
+                            <option value="0" selected>0</option>
+                            <option value="0.04">1</option>
+                            <option value="0.08">2</option>
+                            <option value="0.12">3</option>
+                        </select>
+                    </div>
+                    <div class="configs__config ignore">
+                        <div class="ignore__config checkbox-input ignore-seasons">
+                            <input type="checkbox" class="ignore-seasons-input" name="ignoreSeasons" id="ignoreSeasons"/>
+                            <label class="config-label checkbox-label" for="ignoreSeasons">
+                                Ignore Seasons (Check this if determining profits for a greenhouse setting where seasons will not change)
+                            </label>
+                        </div>
+                        <div class="ignore__config checkbox-input ignore-grapes">
+                            <input type="checkbox" class="ignore-grapes-input" name="ignoreGrapes" id="ignoreGrapes" />
+                            <label class="config-label checkbox-label" for="ignoreGrapes">
+                                Exclude Grapes (Check this if you want to exclude Grapes from the calculator - Grapes cost daily mana to grow)
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="configs__config planting-date">
-                    <label class="config-label" for="plantingDaySelect">
-                        What day are you planting?
-                    </label>
-                    <select class="config-select planting-day-select" name="plantingDaySelect" id="plantingDaySelect">
-                        <option value="1" selected>1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        <option value="21">21</option>
-                        <option value="22">22</option>
-                        <option value="23">23</option>
-                        <option value="24">24</option>
-                        <option value="25">25</option>
-                        <option value="26">26</option>
-                        <option value="27">27</option>
-                        <option value="28">28</option>
-                    </select>
-                    <select class="config-select planting-season-select">
-                        <option value="0" selected>Spring</option>
-                        <option value="1">Summer</option>
-                        <option value="2">Fall</option>
-                        <option value="3">Winter</option>
-                    </select>
-                </div>
-            <div class="configs__config days-amount">
-                    <label class="config-label" for="daysAmountInput">
-                        How Many Days should the calculator run for?
-                    </label>
-                    <input type="number" class="days-amount-input" min="1" max="999" value="1" name="daysAmountInput" id="daysAmountInput"/>
-                </div>
-            <div class="configs__config crops-amount">
-                    <label class="config-label" for="cropsAmountInput">
-                        How Many Crops Will You Plant?
-                    </label>
-                    <input type="number" class="crops-amount-input" min="1" max="999" value="1" name="cropsAmountInput" id="cropsAmountInput"/>
-                </div>
             <div class="configs__config fertilizer">
                 <label class="config-label" for="fertilizerSelect">
-                    Select Fertilizer
+                    Select Fertilizer:
                 </label>
                 <select class="config-select fertilizer-select" name="fertilizerSelect" id="fertilizerSelect">
                     <option value="none" selected>No Fertilizer</option>
@@ -93,7 +146,7 @@ Confirm how totems stack with other totems and fertilizers
                     <option value="advFire">Advanced Fire (50% increased growth speed)</option>
                     <option value="advEarth">Advanced Earth (25% extra crop chance when harvested)</option>
                     <option value="advMagic">Advanced Magic (25% extra crop chance when harvested, 50% increased growth speed)</option>
-                    <option value="other">Other (Other fertilizers only affect profit/xp by triggering "Fertile land" skill)</option>
+                    <option value="other">Other (Other fertilizers still affect profit/xp by triggering "Fertile land" skill)</option>
                 </select>
             </div>
             <div class="configs__config totem">
@@ -102,19 +155,19 @@ Confirm how totems stack with other totems and fertilizers
                         Select Totems:
                     </legend>
                     <ul class="totem-list">
-                        <li>
+                        <li class="checkbox-input">
                             <input type="checkbox" class="fire-fertilizer-totem-input" name="fireFertilizerTotem" id="fireFertilizerTotem" />
                             <label class="config-label checkbox-label" for="fireFertilizerTotem">
                                 Fire Fertilizer Totem (15% increased growth speed)
                             </label>
                         </li>
-                        <li>
+                        <li class="checkbox-input">
                             <input type="checkbox" class="spring-totem-input" name="springTotem" id="springTotem" />
                             <label class="config-label checkbox-label" for="springTotem">
                                 Spring Totem (4% extra crop chance when harvested)
                             </label>
                         </li>
-                        <li>
+                        <li class="checkbox-input">
                             <input type="checkbox" class="farming-totem-input" name="farmingTotem" id="farmingTotem" />
                             <label class="config-label checkbox-label" for="farmingTotem">
                                 Farming Totem (Extra 2 farming xp per harvest)
@@ -123,53 +176,6 @@ Confirm how totems stack with other totems and fertilizers
                     </ul>
                 </fieldset>
             </div>
-            <div class="configs__config tiller-tip">
-                    <select class="config-select tiller-tip-select" name="tillerTipSelect" id="tillerTipSelect">
-                        <option value="0" selected>0</option>
-                        <option value="4">1</option>
-                        <option value="10">2</option>
-                        <option value="14">3</option>
-                    </select>
-                    <label class="config-label select-label" for="tillerTipSelect">
-                        Tiller Tip Level? (provides 0 / 4 / 10 / 14 extra gold per crop sold)
-                    </label>
-                </div>
-            <div class="configs__config propagation">
-                    <select class="config-select propagation-select" name="propagationSelect" id="propagationSelect">
-                        <option value="0" selected>0</option>
-                        <option value="0.04">1</option>
-                        <option value="0.06">2</option>
-                        <option value="0.08">3</option>
-                    </select>
-                    <label class="config-label select-label" for="propagationSelect">
-                        Propagation Level? (provides 0% / 4% / 6% / 8% chance of an extra crop when harvesting)
-                    </label>
-                </div>
-            <div class="configs__config fertile-land">
-                    <select class="config-select fertile-land-select" name="fertileLandSelect" id="fertileLandSelect">
-                        <option value="0" selected>0</option>
-                        <option value="0.04">1</option>
-                        <option value="0.08">2</option>
-                        <option value="0.12">3</option>
-                    </select>
-                    <label class="config-label select-label" for="fertileLandSelect">
-                        Fertile Land Level? (provides 0% / 4% / 8% / 12% chance of an extra crop when harvesting crops that are fertilized)
-                    </label>
-                </div>
-            <div class="configs__config ignore">
-                    <div class="ignore__config ignore-seasons">
-                        <input type="checkbox" class="ignore-seasons-input" name="ignoreSeasons" id="ignoreSeasons"/>
-                        <label class="config-label checkbox-label" for="ignoreSeasons">
-                            Ignore Seasons (Check this if determining profits for a greenhouse setting where seasons will not change)
-                        </label>
-                    </div>
-                    <div class="ignore__config ignore-grapes">
-                        <input type="checkbox" class="ignore-grapes-input" name="ignoreGrapes" id="ignoreGrapes" />
-                        <label class="config-label checkbox-label" for="ignoreGrapes">
-                            Exclude Grapes (Check this if you want to exclude Grapes from the calculator - Grapes cost daily mana to grow)
-                        </label>
-                    </div>
-                </div>
         </div>
     </div>
     <div class="submit-container">

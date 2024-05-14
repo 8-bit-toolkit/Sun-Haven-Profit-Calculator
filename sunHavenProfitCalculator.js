@@ -1,10 +1,9 @@
 // import { default as crops } from './crops';
 
 /*
- * Update totems to have multiple selectable
- * Update the form to try out a columnar layout. The whole thing is a bit tall. Can revert to one-after-another fields on smaller screens
  * Update tooltips to have better separation of labels and content, maybe a table?
  * ROI daily math - https://www.reddit.com/r/StardewValley/comments/4mcxex/stardew_profits_calculator_and_graphing_tool/
+ * Make a README page
  * Add support for foreign languages?
  * Test it a bunch
  * Ask questions in discords - make gifs of prototype to share
