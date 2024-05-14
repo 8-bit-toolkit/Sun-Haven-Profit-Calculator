@@ -82,7 +82,7 @@ Confirm how totems stack with other totems and fertilizers
                 </div>
             <div class="configs__config fertilizer">
                 <label class="config-label" for="fertilizerSelect">
-                    Will Fertilizer be used?
+                    Select Fertilizer
                 </label>
                 <select class="config-select fertilizer-select" name="fertilizerSelect" id="fertilizerSelect">
                     <option value="none" selected>No Fertilizer</option>
@@ -97,15 +97,31 @@ Confirm how totems stack with other totems and fertilizers
                 </select>
             </div>
             <div class="configs__config totem">
-                <label class="config-label">
-                    Will Totems be used?
-                </label>
-                <select class="config-select totem-select">
-                    <option value="none" selected>No Totems</option>
-                    <option value="fireFertilizer">Fire Fertilizer Totem (15% increased growth speed)</option>
-                    <option value="spring">Spring Totem (4% extra crop chance when harvested)</option>
-                    <option value="farming">Farming Totem (Extra 2 farming xp per harvest)</option>
-                </select>
+                <fieldset class="totem-fieldset">
+                    <legend>
+                        Select Totems:
+                    </legend>
+                    <ul class="totem-list">
+                        <li>
+                            <input type="checkbox" class="fire-fertilizer-totem-input" name="fireFertilizerTotem" id="fireFertilizerTotem" />
+                            <label class="config-label checkbox-label" for="fireFertilizerTotem">
+                                Fire Fertilizer Totem (15% increased growth speed)
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="spring-totem-input" name="springTotem" id="springTotem" />
+                            <label class="config-label checkbox-label" for="springTotem">
+                                Spring Totem (4% extra crop chance when harvested)
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" class="farming-totem-input" name="farmingTotem" id="farmingTotem" />
+                            <label class="config-label checkbox-label" for="farmingTotem">
+                                Farming Totem (Extra 2 farming xp per harvest)
+                            </label>
+                        </li>
+                    </ul>
+                </fieldset>
             </div>
             <div class="configs__config tiller-tip">
                     <select class="config-select tiller-tip-select" name="tillerTipSelect" id="tillerTipSelect">
@@ -147,8 +163,8 @@ Confirm how totems stack with other totems and fertilizers
                             Ignore Seasons (Check this if determining profits for a greenhouse setting where seasons will not change)
                         </label>
                     </div>
-                    <div class="ignore__config ignore-grapes" name="ignoreGrapes" id="ignoreGrapes">
-                        <input type="checkbox" class="ignore-grapes-input" />
+                    <div class="ignore__config ignore-grapes">
+                        <input type="checkbox" class="ignore-grapes-input" name="ignoreGrapes" id="ignoreGrapes" />
                         <label class="config-label checkbox-label" for="ignoreGrapes">
                             Exclude Grapes (Check this if you want to exclude Grapes from the calculator - Grapes cost daily mana to grow)
                         </label>

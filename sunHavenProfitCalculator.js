@@ -37,7 +37,9 @@ window.onload = () => {
     const $amountOfDays = document.getElementsByClassName('days-amount-input')[0];
     const $amountOfCrops = document.getElementsByClassName('crops-amount-input')[0];
     const $fertilizer = document.getElementsByClassName('fertilizer-select')[0];
-    const $totem = document.getElementsByClassName('totem-select')[0];
+    const $fireTotem = document.getElementsByClassName('fire-fertilizer-totem-input')[0];
+    const $springTotem = document.getElementsByClassName('spring-totem-input')[0];
+    const $farmingTotem = document.getElementsByClassName('farming-totem-input')[0];
     const $tillerTipInput = document.getElementsByClassName('tiller-tip')[0];
     const $tillerTipLevel = document.getElementsByClassName('tiller-tip-select')[0];
     const $propagationLevel = document.getElementsByClassName('propagation-select')[0];
@@ -275,13 +277,8 @@ window.onload = () => {
             advFire: 0.5,
             advMagic: 0.5,
         };
-        const totemMap = {
-            none: 0,
-            fireFertilizer: 0.15,
-        };
-
         const fertilizerModifier = fertilizerMap[$fertilizer.value] || 0;
-        const totemModifier = totemMap[$totem.value] || 0;
+        const totemModifier = $fireTotem.checked ? 0.15 : 0;
 
         // TODO - determine if totems and fertilizers can overlap or if it just takes the best one
         firstHarvest = Math.ceil(crop.daysToHarvest / (1 + fertilizerModifier + totemModifier));
@@ -315,13 +312,8 @@ window.onload = () => {
             advEarth: 0.25,
             advMagic: 0.25,
         };
-        const totemMap = {
-            none: 0,
-            spring: 0.15,
-        };
-
         const fertilizerModifier = fertilizerMap[$fertilizer.value] || 0;
-        const totemModifier = totemMap[$totem.value] || 0;
+        const totemModifier = $springTotem.checked ? 0.04 : 0;
         const propagationModifier = Number($propagationLevel.value);
         const fertileLandModifier = $fertilizer.value !== 'none' ? Number($fertileLandLevel.value) : 0;
 
@@ -346,7 +338,7 @@ window.onload = () => {
      * @return {Number} - The total amount of farming xp gained for this crop
      */
     const calculateAmountOfXP = (crop, numberOfHarvests) => {
-        const totemModifier = $totem.value === 'farming' ? 2 : 0;
+        const totemModifier = $farmingTotem.checked ? 2 : 0;
         return (crop.experience + totemModifier) * numberOfHarvests;
     };
 

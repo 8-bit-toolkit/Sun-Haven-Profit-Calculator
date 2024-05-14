@@ -145,3 +145,14 @@ body {
         height: 265px;
     }
 }
+
+.totem-fieldset {
+    margin: 0;
+    padding: 0;
+}
+
+.totem-list {
+    list-style: none;
+    margin: 10px 0 10px 5px;
+    padding: 0;
+}
