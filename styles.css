@@ -113,10 +113,10 @@ body {
     width: 35px;
     margin: 0 5px;
     position: relative;
-    bottom: -8px;
+    bottom: -10px;
 }
 
-.graph-wrapper .graph-tooltip .graph-tooltip__list {
+.graph-wrapper .graph-tooltip {
     list-style: none;
     margin: 0 0 0 5px;
     padding: 0;
@@ -162,4 +162,31 @@ body {
 
 .checkbox-input {
     padding: 2px 0;
+}
+
+.graph-tooltip__table {
+    color: white;
+    text-align: left;
+}
+
+.graph-tooltip__table .graph-tooltip__table__label {
+    font-weight: normal;
+}
+
+.graph-tooltip__table .graph-tooltip__table__data {
+    padding: 0 0 0 10px;
+}
+
+.graph-tooltip__table .graph-tooltip__table__data-currency {
+    position: relative;
+    top: -10px;
+}
+
+.footer-container {
+    text-align: center;
+    color:white;
+}
+
+.footer-link {
+    color: white;
 }
