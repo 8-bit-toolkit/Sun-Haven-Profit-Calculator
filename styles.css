@@ -135,9 +135,26 @@ body {
     text-align: left;
 }
 
-.submit-button {
+.grid-button {
     width: 200px;
-    height: 100px;
+    height: 50px;
+    background-color: rgb(216, 216, 216);
+    border-radius: 10px;
+    border: 3px solid darkslategray;
+}
+
+.grid-button:hover {
+    background-color: rgb(191, 191, 191);
+}
+
+.grid-button:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6), inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.submit-container .submit-button {
+    width: 250px;
+    height: 75px;
+    font-size: 20px;
 }
 
 /* medium sized screens */

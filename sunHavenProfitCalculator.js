@@ -1,8 +1,7 @@
 // import { default as crops } from './crops';
 
 /*
- * Update graph buttons text and style them better
- * Add tab icon
+ * Solve issue with grid items reordering when switching between profits and experience and updating graph
  * ROI daily math - https://www.reddit.com/r/StardewValley/comments/4mcxex/stardew_profits_calculator_and_graphing_tool/
  * Make a README page
  * SEO?
@@ -180,7 +179,7 @@ window.onload = () => {
      * After a user mouses off of a bar, hide the tooltip and restore opacity to all bars
      */
     const mouseleave = () => {
-        // tooltip.style("display", "none");
+        tooltip.style("display", "none");
         d3.selectAll("rect").style("opacity", 1);
     };
 
@@ -420,16 +419,27 @@ window.onload = () => {
     };
 
     /*
-     * When the crops region is changed do a bunch of fun stuff
+     * Toggle the visibility of the graph and various other related labels and inputs
+     * @param {Boolean} visible - the desired visibility of the graph and other inputs
+     */
+    const toggleGraphVisibility = (visible) => {
+        $disclaimers.style.display = visible ? 'block' : 'none';
+        $graphButtons.style.display = visible ? 'block' : 'none';
+        $grid.style.display = visible ? 'inline-block' : 'none';
+        $submitButton.textContent = visible ? 'Update Graph' : 'Generate Graph';
+        // reset the grid to profits by default when hiding it by switching regions (currently the only way to hide it)
+        currentGrid = visible ? currentGrid : 'totalProfit';
+    };
+
+    /*
+     * When the crops region is changed hide the grid and remove/add various fields based on the region selected
      */
     $cropsRegion.onchange = () => {
         // set the region properly
         currentRegion = $cropsRegion.value;
 
-        // hide the grid and related buttons
-        $disclaimers.style.display = 'none';
-        $graphButtons.style.display = 'none';
-        $grid.style.display = 'none';
+        // hide the grid and related fields and labels
+        toggleGraphVisibility(false);
 
         if(currentRegion === 'sunHaven'){
             // show sun haven-specific inputs
@@ -453,9 +463,9 @@ window.onload = () => {
             $configsForm.reportValidity()
         } else {
             event.preventDefault();
-            $disclaimers.style.display = 'block';
-            $graphButtons.style.display = 'block';
-            $grid.style.display = 'inline-block';
+
+            // show the grid and related fields and labels
+            toggleGraphVisibility(true);
 
             // iterate through each crop
             let cropsListAfterMath = JSON.parse(cropsMap[currentRegion].cropsJSON).map(crop => {
