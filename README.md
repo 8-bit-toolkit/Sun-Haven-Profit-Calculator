@@ -25,4 +25,4 @@ This calculator is live at [https://www.sunhavencrops.com](https://www.sunhavenc
 
 # Questions, Suggestions, Requests
 
-Please reach out me directly by email at [8.bit.toolkit@gmail.com](mailto:8.bit.toolkit@gmail.com?subject=README mail), on my [reddit account](https://reddit.com/user/8_bit_toolkit)
+Please reach out me directly by email at [8.bit.toolkit@gmail.com](mailto:8.bit.toolkit@gmail.com\?subject=README mail), on my [reddit account](https://reddit.com/user/8_bit_toolkit)
