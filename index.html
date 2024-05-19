@@ -20,6 +20,7 @@ Confirm how totems stack with other totems and fertilizers
     <meta name="msapplication-config" content="/images/favicon/browserconfig.xml">
     <meta name="theme-color" content="#606060">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Sun Haven Crop Calculator</title>
 </head>
 <body style="background-image: url('./images/assets/background.webp');">
@@ -224,10 +225,10 @@ Confirm how totems stack with other totems and fertilizers
                 You are buying seeds at their normal price (no sales/discounts)
             </li>
             <li>
-                You harvest crops when they are grown, sell them, then replant the same amount of those crops the same day
+                Crops are harvested immediately when grown, sold, then the same amount are replanted the same day
             </li>
             <li>
-                Fertilizers and Totems may stack but multiple Totems with similar effects cannot stack
+                Fertilizers and Totems can have stacking effects, but multiple Totems with similar effects do not stack.
             </li>
             <li>
                 Any specified Fertilizer or Totems affect ALL crops in the calculation
@@ -236,19 +237,20 @@ Confirm how totems stack with other totems and fertilizers
                 Fertilizers and Totems applied to crops that regrow, only affect the INITIAL harvest, not subsequent ones (I've personally confirmed this for "growth rate" fertilizers/totems, but need dev confirmation for "extra crop chance" fertilizers/totems)
             </li>
             <li>
-                ^ Related to the above, a crop that regrows that has been fertilized will NO LONGER activate the "Fertile Land" skill after its first harvest, even if it still appears to be fertilized (also need dev confirmation on this)
+                A crop that regrows that has been fertilized will NO LONGER activate the "Fertile Land" skill after its first harvest, even if it still appears to be fertilized (need dev confirmation on this)
             </li>
             <li>
                 When determining crop growth speed and extra harvest chance: any relevant Skills, Totems, or Fertilizers have their effects applied to the base crop numbers in an additive manner rather than multiplicative
             </li>
             <li>
-                This calculator determines an AVERAGE profit rounded to 2 decimal places (many skills/totems/fertilizers give a "chance" to get extra crops, so your personal results may differ from these averages)
+                This calculator determines an AVERAGE profit. Many skills/totems/fertilizers give a "chance" to get extra crops, so your personal results may differ from these averages.
             </li>
         </ul>
     </div>
 </div>
 <div class="footer-container">
     <p class="footer-text">Website Design/Development Powered By: <a class="footer-link" target="_blank" href="https://www.reddit.com/user/8-bit-toolkit">8-Bit-Toolkit</a> - Sun Haven v1.4 property of <a class="footer-link" target="_blank" href="https://linktr.ee/PixelSproutStudios">Pixel Sprout Studios</a></p>
+    <p class="footer-text">Please send questions, requests, suggestions to <a class="footer-link" href="mailto:8.bit.toolkit@gmail.com?subject=WEBSITE mail">8.bit.toolkit@gmail.com</a></p>
 </div>
 </body>
 </html>

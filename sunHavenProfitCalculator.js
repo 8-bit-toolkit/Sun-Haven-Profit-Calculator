@@ -1,9 +1,8 @@
 // import { default as crops } from './crops';
 
 /*
- * Solve issue with grid items reordering when switching between profits and experience and updating graph
  * ROI daily math - https://www.reddit.com/r/StardewValley/comments/4mcxex/stardew_profits_calculator_and_graphing_tool/
- * Make a README page
+ * Fix the www issue on cloudflare
  * SEO?
  * Test it a bunch (really test the shortened harvest times math and extra crop math)
  * Add support for foreign languages?
@@ -413,7 +412,12 @@ window.onload = () => {
      */
     const sortCropsListAndUpdateGrid = (cropsList, sortingProperty) => {
         cropsList.sort((aCrop, bCrop) => {
-            return bCrop[sortingProperty] - aCrop[sortingProperty];
+            const difference = bCrop[sortingProperty] - aCrop[sortingProperty];
+            // if two crops have the same value, sort them alphabetically
+            if(difference === 0){
+                return aCrop.name.localeCompare(bCrop.name);
+            }
+            return difference;
         });
         updateTheGraph(cropsList, sortingProperty);
     };
