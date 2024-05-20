@@ -165,11 +165,32 @@ body {
     font-size: 20px;
 }
 
+/* medium-large screens */
+@media (851px <= width <= 1000px) {
+    .fertilizer-select {
+        width: 100%;
+    }
+}
+
 /* medium sized screens */
-@media (400px <= width <= 850px) {
+@media (530px <= width <= 850px) {
     .title-image-container .title-image {
         width: 500px;
         height: 265px;
+    }
+    .fertilizer-select {
+        width: 100%;
+    }
+}
+
+/* small screens */
+@media (width <= 529px) {
+    .title-image-container .title-image {
+        width: 250px;
+        height: 132px;
+    }
+    .fertilizer-select {
+        width: 100%;
     }
 }
 
