@@ -236,3 +236,8 @@ body {
 .footer-link {
     color: white;
 }
+
+.footer-text {
+    margin: 3px 0;
+    font-size: 14px;
+}

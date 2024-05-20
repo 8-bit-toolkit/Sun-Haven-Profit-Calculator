@@ -1,6 +1,7 @@
 // import { default as crops } from './crops';
 
 /*
+ * Link to a linktree for 8-bit-toolkit
  * ROI daily math - https://www.reddit.com/r/StardewValley/comments/4mcxex/stardew_profits_calculator_and_graphing_tool/
  * Fix the www issue on cloudflare - https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-zone-apex/
  * SEO?
