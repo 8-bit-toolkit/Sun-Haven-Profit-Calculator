@@ -5,6 +5,7 @@
  * ROI daily math - https://www.reddit.com/r/StardewValley/comments/4mcxex/stardew_profits_calculator_and_graphing_tool/
  * Fix the www issue on cloudflare - https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-zone-apex/
  * SEO?
+ * Add renew domain to calendar for next year May 9th 2025
  * Test it a bunch (really test the shortened harvest times math and extra crop math)
  * Add support for foreign languages?
  *
@@ -227,7 +228,7 @@ window.onload = () => {
         yAxis.transition().duration(1000).call(d3.axisLeft(y));
 
         // retrieve all currently existing bars
-        const bars = svg.selectAll("rect")
+        svg.selectAll("rect")
             .data(newData) // apply the new data to the existing bars
             .join("rect")// .enter().append("rect");
             .on("mouseover", mouseover)
