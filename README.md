@@ -20,7 +20,6 @@ Future plans for this calculator include but are not limited to:
 4. Implementation of new crops/mechanics released as part of Sun Haven V1.4
 
 # To Install And Run
-
 This calculator is live at [https://www.sunhavencrops.com](https://www.sunhavencrops.com) but can be run locally by downloading the project and opening the "index.html" file.
 
 # Questions, Suggestions, Requests

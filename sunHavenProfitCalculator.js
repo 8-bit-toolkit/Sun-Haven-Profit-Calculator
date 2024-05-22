@@ -1,15 +1,14 @@
 // import { default as crops } from './crops';
 
 /*
- * Link to a linktree for 8-bit-toolkit
  * ROI daily math - https://www.reddit.com/r/StardewValley/comments/4mcxex/stardew_profits_calculator_and_graphing_tool/
+ * Add a "how to use" section?
  * Fix the www issue on cloudflare - https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-zone-apex/
- * SEO?
  * Add renew domain to calendar for next year May 9th 2025
  * Test it a bunch (really test the shortened harvest times math and extra crop math)
  * Add support for foreign languages?
  *
- * OPTIONAL - Get rid of "update graph" button and just have shit run every time someone changes something?
+ * OPTIONAL - Get rid of "update graph" button and just have stuff run every time someone changes something?
  */
 
 window.onload = () => {
@@ -50,6 +49,7 @@ window.onload = () => {
     const $submitButton = document.getElementsByClassName('submit-button')[0];
     const $profitsButton = document.getElementsByClassName('profits-button')[0];
     const $experienceButton = document.getElementsByClassName('experience-button')[0];
+    const $dailyROIButton = document.getElementsByClassName('dailyROI-button')[0];
     const $grid = document.getElementById('my_dataviz');
     const $disclaimers = document.getElementsByClassName('disclaimers-container')[0];
     const $graphButtons = document.getElementsByClassName('graph-buttons')[0];
@@ -103,6 +103,9 @@ window.onload = () => {
      */
     const mouseover = (e,d) => {
         const totalProfit = Math.round(d.totalProfit * 100) / 100;
+        const roi = Math.round(d.roi * 100) / 100;
+        const dailyROI = Math.round(d.dailyROI * 100) / 100;
+
         const harvestInfo = d.regrows ? `
             <tr>
                 <th scope="row" class="graph-tooltip__table__label">First Harvest:</th>
@@ -127,13 +130,25 @@ window.onload = () => {
                                 <td class="graph-tooltip__table__data graph-tooltip__table__data-currency"><span class="${totalProfit >= 0 ? 'posProfit' : 'negProfit'}">${totalProfit}</span><img class="graph-tooltip__currency" src="./images/assets/${cropsMap[currentRegion].currency}.png" /></td>
                             </tr>
                             <tr>
+                                <th scope="row" class="graph-tooltip__table__label">ROI:</th>
+                                <td class="graph-tooltip__table__data graph-tooltip__table__data"><span class="${roi >= 0 ? 'posProfit' : 'negProfit'}">${roi}%</span></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="graph-tooltip__table__label">Daily ROI:</th>
+                                <td class="graph-tooltip__table__data graph-tooltip__table__data"><span class="${dailyROI >= 0 ? 'posProfit' : 'negProfit'}">${dailyROI}%</span></td>
+                            </tr>
+                            <tr>
                                 <th scope="row" class="graph-tooltip__table__label">Farming Experience:</th>
                                 <td class="graph-tooltip__table__data">${d.experienceGained}</td>
                             </tr>
                             ${harvestInfo}
                             <tr>
-                                <th scope="row" class="graph-tooltip__table__label">Harvests:</th>
+                                <th scope="row" class="graph-tooltip__table__label">Total Harvests:</th>
                                 <td class="graph-tooltip__table__data">${d.harvests}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="graph-tooltip__table__label">Unused days after last harvest:</th>
+                                <td class="graph-tooltip__table__data">${d.leftoverDays}</td>
                             </tr>
                             <tr>
                                 <th scope="row" class="graph-tooltip__table__label">Total Crops Harvested:</th>
@@ -144,12 +159,12 @@ window.onload = () => {
                                 <td class="graph-tooltip__table__data">${Math.round(d.grossSales * 100) / 100}</td>
                             </tr>
                             <tr>
-                                <th scope="row" class="graph-tooltip__table__label">Acquired From:</th>
-                                <td class="graph-tooltip__table__data">${d.acquiredFrom}</td>
-                            </tr>
-                            <tr>
                                 <th scope="row" class="graph-tooltip__table__label">Total Seed Cost:</th>
                                 <td class="graph-tooltip__table__data">${d.costOfSeeds}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="graph-tooltip__table__label">Seeds Acquired From:</th>
+                                <td class="graph-tooltip__table__data">${d.acquiredFrom}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -212,12 +227,12 @@ window.onload = () => {
 
         const newBarValues = newData.map(crop => crop[yProperty]);
         const newHighestAmount = Math.round((Math.max(...newBarValues) + 10) * 100) / 100;
-        const newLowestAmount = yProperty === 'totalProfit' ? Math.round((Math.min(...newBarValues) - 100) * 100) / 100 : Math.min(...newBarValues);
+        const newLowestAmount = yProperty === 'totalProfit' ? Math.round((Math.min(...newBarValues) - 100) * 100) / 100 : (Math.min(...newBarValues) - 5);
 
         // update the X axis
         x.domain(newData.map(crop => crop.name));
         xAxis.transition()
-            .duration(1000)
+            .duration(500)
             .call(d3.axisBottom(x))
             .selectAll("text")
             .attr("transform", "translate(-10,0)rotate(-45)")
@@ -225,7 +240,7 @@ window.onload = () => {
 
         // update the Y axis
         y.domain([Math.min(newLowestAmount, 0), newHighestAmount ]);
-        yAxis.transition().duration(1000).call(d3.axisLeft(y));
+        yAxis.transition().duration(500).call(d3.axisLeft(y));
 
         // retrieve all currently existing bars
         svg.selectAll("rect")
@@ -235,7 +250,7 @@ window.onload = () => {
             .on("mousemove", mousemove)
             .on("mouseleave", mouseleave)
             .transition()
-            .duration(1000)
+            .duration(500)
             .attr("x", d => x(d.name))
             .attr("y", d => y(d[yProperty]))
             .attr("width", x.bandwidth())
@@ -328,15 +343,22 @@ window.onload = () => {
      * @param {Object} crop - The crop being currently evaluated
      * @param {Number} firstHarvest - The amount of days until the first harvest for this crop
      * @param {Number} numberOfGrowingDays - The amount of days this calculation will run for
-     * @return {Number} - The number of harvests possible for this crop during this calculation period
+     * @return {Object} - The number of harvests possible for this crop during this calculation period and the number of
+     * leftover unused days
      */
     const calculateNumberOfHarvests = (crop, firstHarvest, numberOfGrowingDays) => {
         // if the crop regrows, be sure to account for the first initial longer harvest
         if(crop.regrows){
-            return Math.floor(1 +((numberOfGrowingDays - firstHarvest) / crop.regrowRate));
+            return {
+                leftoverDays:(numberOfGrowingDays - firstHarvest) % crop.regrowRate,
+                numberOfHarvests: Math.floor(1 +((numberOfGrowingDays - firstHarvest) / crop.regrowRate)),
+            }
         }
 
-        return Math.floor(numberOfGrowingDays / firstHarvest);
+        return {
+            leftoverDays: numberOfGrowingDays % firstHarvest,
+            numberOfHarvests: Math.floor(numberOfGrowingDays / firstHarvest),
+        };
     };
 
     /*
@@ -387,7 +409,7 @@ window.onload = () => {
     /*
      * @param {Object} crop - The crop being currently evaluated
      * @param {Number} numberOfCropsHarvested - The amount of this crop that will have been harvested
-     * @return {Number} - The total amount of currency acquired from selling these crops
+     * @return {Number} - The total amount of currency acquired from selling this crop
      */
     const calculateGrossSales = (crop, numberOfCropsHarvested) => {
         const salesFromCrops = (numberOfCropsHarvested * crop.sellPrice);
@@ -407,6 +429,29 @@ window.onload = () => {
         }
         return ((crop.seedPrice * numberOfCrops) * numberOfHarvests);
     }
+
+    /*
+     * The daily "return on investment" of each crop, distinct from profit, useful for when you're starting out
+     * @param {Object} crop - The crop being currently evaluated
+     * @param {Number} firstHarvest - The amount of days until the first harvest for this crop
+     * @param {Number} numberOfGrowingDays - The amount of days this calculation will run for
+     * @param {Number} leftoverDays - The amount of unused days this crop will not need
+     * @param {Number} grossSales - The total amount of currency acquired from selling this crop
+     * @param {Number} costOfSeeds - The total cost spent on seeds for this crop
+     * @param {Number} totalProfit - The total amount of currency profited from the selling of this crop
+     * @returns {Object} - The ROI and Daily ROI for this crop
+     */
+    const calculateROI = (crop, firstHarvest, numberOfGrowingDays, leftoverDays, grossSales, costOfSeeds, totalProfit) => {
+        const roi =  ((grossSales / costOfSeeds) * 100) - 100;
+        /*
+         * only calculate daily ROI for the USED days of the calculators runtime. Otherwise, you could see a less
+         * accurate daily ROI if there are unused days left for a specific crop
+         */
+        return {
+            roi: roi,
+            dailyROI: (totalProfit / (numberOfGrowingDays - leftoverDays)),
+        };
+    };
 
     /*
      * @param {Array} cropsList - The crops list after profit calculations have been performed
@@ -475,37 +520,41 @@ window.onload = () => {
 
             // iterate through each crop
             let cropsListAfterMath = JSON.parse(cropsMap[currentRegion].cropsJSON).map(crop => {
-                const growingDays = $ignoreSeasons.checked ? Number($amountOfDays.value) : calculateNumberOfGrowingDays(crop);
-                if (growingDays === 0){
+                const numberOfGrowingDays = $ignoreSeasons.checked ? Number($amountOfDays.value) : calculateNumberOfGrowingDays(crop);
+                if (numberOfGrowingDays === 0){
                     return {
                         invalid: true,
                     };
                 }
-                const firstHarvest = calculateFirstHarvest(crop, growingDays);
-                const harvests = firstHarvest === 0 ? 0 : calculateNumberOfHarvests(crop, firstHarvest, growingDays);
-                if (harvests === 0) {
+                const firstHarvest = calculateFirstHarvest(crop, numberOfGrowingDays);
+                if (firstHarvest === 0) {
                     return {
                         invalid: true,
                     };
                 }
-                const experience = calculateAmountOfXP(crop, harvests);
-                const numberOfCropsHarvested = calculateNumberOfCropsHarvested(crop, harvests, Number($amountOfCrops.value));
+                const { numberOfHarvests, leftoverDays } = calculateNumberOfHarvests(crop, firstHarvest, numberOfGrowingDays);
+                const experience = calculateAmountOfXP(crop, numberOfHarvests);
+                const numberOfCropsHarvested = calculateNumberOfCropsHarvested(crop, numberOfHarvests, Number($amountOfCrops.value));
                 const grossSales = calculateGrossSales(crop, numberOfCropsHarvested);
-                const costOfSeeds = calculateCostOfSeeds(crop,harvests,Number($amountOfCrops.value));
+                const costOfSeeds = calculateCostOfSeeds(crop,numberOfHarvests,Number($amountOfCrops.value));
                 const totalProfit = grossSales - costOfSeeds;
+                const { roi, dailyROI } = calculateROI(crop, firstHarvest, numberOfGrowingDays, leftoverDays, grossSales, costOfSeeds, totalProfit);
                 return {
                     name: crop.name,
                     regrows: crop.regrows,
                     regrowRate: crop.regrowRate,
                     acquiredFrom: crop.acquiredFrom,
-                    growingDays: growingDays,
+                    growingDays: numberOfGrowingDays,
                     firstHarvest: firstHarvest,
-                    harvests: harvests,
+                    harvests: numberOfHarvests,
                     experienceGained: experience,
                     numberOfCropsHarvested: numberOfCropsHarvested,
                     grossSales: grossSales,
                     costOfSeeds: costOfSeeds,
-                    totalProfit: Math.round(totalProfit * 100) / 100, // round to 2 decimal places
+                    leftoverDays: leftoverDays,
+                    roi: roi,
+                    dailyROI: dailyROI,
+                    totalProfit: totalProfit,
                 };
             });
 
@@ -530,6 +579,12 @@ window.onload = () => {
                 currentGrid = 'experienceGained';
                 sortCropsListAndUpdateGrid(cropsListAfterMath, currentGrid);
             };
+
+            $dailyROIButton.onclick = (event) => {
+                event.preventDefault();
+                currentGrid = 'dailyROI';
+                sortCropsListAndUpdateGrid(cropsListAfterMath, currentGrid);
+            }
         }
     };
 };

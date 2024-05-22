@@ -199,10 +199,13 @@
 <div class="graph-wrapper">
     <div class="graph-buttons">
         <button class="profits-button grid-button">
-            Show Profits
+            Sort By Profit
         </button>
         <button class="experience-button grid-button">
-            Show Farming Experience
+            Sort By Farming Experience
+        </button>
+        <button class="dailyROI-button grid-button">
+            Sort By Daily ROI
         </button>
     </div>
     <div class="graph-container">
@@ -216,31 +219,31 @@
             This calculator assumes:
         </p>
         <ul>
-            <li>
+            <li class="disclaimer">
                 You are not processing crops into seeds and replanting them
             </li>
-            <li>
+            <li class="disclaimer">
                 You are buying seeds at their normal price (no sales/discounts)
             </li>
-            <li>
-                Crops are harvested immediately when grown, sold, then the same amount are replanted the same day
+            <li class="disclaimer">
+                Crops are harvested immediately when grown, then the same amount are replanted the same day
             </li>
-            <li>
+            <li class="disclaimer">
                 Fertilizers and Totems can have stacking effects, but multiple Totems with similar effects do not stack.
             </li>
-            <li>
+            <li class="disclaimer">
                 Any specified Fertilizer or Totems affect ALL crops in the calculation
             </li>
-            <li>
+            <li class="disclaimer">
                 Fertilizers and Totems applied to crops that regrow, only affect the INITIAL harvest, not subsequent ones (I've personally confirmed this for "growth rate" fertilizers/totems, but need dev confirmation for "extra crop chance" fertilizers/totems)
             </li>
-            <li>
+            <li class="disclaimer">
                 A crop that regrows that has been fertilized will NO LONGER activate the "Fertile Land" skill after its first harvest, even if it still appears to be fertilized (need dev confirmation on this)
             </li>
-            <li>
+            <li class="disclaimer">
                 When determining crop growth speed and extra harvest chance: any relevant Skills, Totems, or Fertilizers have their effects applied to the base crop numbers in an additive manner rather than multiplicative
             </li>
-            <li>
+            <li class="disclaimer">
                 This calculator determines an AVERAGE profit. Many skills/totems/fertilizers give a "chance" to get extra crops, so your personal results may differ from these averages.
             </li>
         </ul>
