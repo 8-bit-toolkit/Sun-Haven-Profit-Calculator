@@ -114,7 +114,7 @@ window.onload = () => {
                 <td class="graph-tooltip__table__data">${d.regrowRate} day${d.regrowRate === 1 ? '' : 's'}</td>
             </tr>` :
             `<tr>
-                <th scope="row" class="graph-tooltip__table__label">Harvest Every:</th>
+                <th scope="row" class="graph-tooltip__table__label">Ready To Harvest Every:</th>
                 <td class="graph-tooltip__table__data">${d.firstHarvest} days</td>
             </tr>`;
         tooltip
