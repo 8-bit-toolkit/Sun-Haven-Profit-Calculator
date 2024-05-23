@@ -197,16 +197,22 @@
 </form>
 
 <div class="graph-wrapper">
-    <div class="graph-buttons">
-        <button class="profits-button grid-button">
-            Sort By Profit
-        </button>
-        <button class="experience-button grid-button">
-            Sort By Farming Experience
-        </button>
-        <button class="dailyROI-button grid-button">
-            Sort By Daily ROI
-        </button>
+    <div class="graph-sort-wrapper">
+        <div class="graph-sort-container">
+            <label class="sort-label" for="graphSort">
+                Sort By
+            </label>
+            <select class="config-select sort-select" name="graphSort" id="graphSort">
+                <option value="totalProfit" selected>Total Profit (Gross Sales - Seed Price)</option>
+                <option value="grossSales">Gross Sales</option>
+                <option value="costOfSeeds">Cost Of Seeds</option>
+                <option value="experienceGained">Farming Experience Gained</option>
+                <option value="roi">ROI (Return On Investment)</option>
+                <option value="dailyROI">Daily ROI</option>
+                <option value="harvests">Number Of Harvests</option>
+                <option value="numberOfCropsHarvested">Total Crops Harvested</option>
+            </select>
+        </div>
     </div>
     <div class="graph-container">
         <div id="my_dataviz"></div>

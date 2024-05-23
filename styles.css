@@ -16,8 +16,8 @@ body {
     display: none;
     position: relative;
     background: rgba(0, 0, 0, .5);
-    margin: 10px;
-    border-radius: 10px;
+    margin: 0 10px 10px 10px;
+    border-radius: 0 0 10px 10px;
 }
 
 #my_dataviz .tick, #my_dataviz .domain {
@@ -130,8 +130,19 @@ body {
     padding: 0;
 }
 
-.graph-buttons {
+.graph-sort-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.graph-sort-wrapper .graph-sort-container {
     display: none;
+    min-width: 1140px;
+    background: rgba(0, 0, 0, .5);
+    border-radius: 10px 10px 0 0;
+    color: white;
+    margin: 0 10px;
+    padding: 15px 0 0 0;
 }
 
 .disclaimers-container {
@@ -147,22 +158,6 @@ body {
     margin: 2px 0;
 }
 
-.grid-button {
-    width: 200px;
-    height: 50px;
-    background-color: rgb(216, 216, 216);
-    border-radius: 10px;
-    border: 3px solid darkslategray;
-}
-
-.grid-button:hover {
-    background-color: rgb(191, 191, 191);
-}
-
-.grid-button:active {
-    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6), inset 2px 2px 3px rgba(0, 0, 0, 0.6);
-}
-
 .submit-container .submit-button {
     width: 250px;
     height: 75px;
@@ -170,9 +165,12 @@ body {
 }
 
 /* medium-large screens */
-@media (851px <= width <= 1000px) {
+@media (851px <= width <= 1175px) {
     .fertilizer-select {
         width: 100%;
+    }
+    .graph-sort-wrapper {
+        justify-content: left;
     }
 }
 
@@ -185,6 +183,9 @@ body {
     .fertilizer-select {
         width: 100%;
     }
+    .graph-sort-wrapper {
+        justify-content: left;
+    }
 }
 
 /* small screens */
@@ -195,6 +196,9 @@ body {
     }
     .fertilizer-select {
         width: 100%;
+    }
+    .graph-sort-wrapper {
+        justify-content: left;
     }
 }
 

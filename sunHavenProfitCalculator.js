@@ -46,13 +46,11 @@ window.onload = () => {
     const $ignoreInputs = document.getElementsByClassName('ignore')[0];
     const $ignoreSeasons = document.getElementsByClassName('ignore-seasons-input')[0];
     const $ignoreGrapes = document.getElementsByClassName('ignore-grapes-input')[0];
+    const $sortSelect = document.getElementsByClassName('sort-select')[0];
     const $submitButton = document.getElementsByClassName('submit-button')[0];
-    const $profitsButton = document.getElementsByClassName('profits-button')[0];
-    const $experienceButton = document.getElementsByClassName('experience-button')[0];
-    const $dailyROIButton = document.getElementsByClassName('dailyROI-button')[0];
     const $grid = document.getElementById('my_dataviz');
     const $disclaimers = document.getElementsByClassName('disclaimers-container')[0];
-    const $graphButtons = document.getElementsByClassName('graph-buttons')[0];
+    const $graphSortContainer = document.getElementsByClassName('graph-sort-container')[0];
 
     // state variables
     let currentGrid = 'totalProfit';
@@ -226,8 +224,12 @@ window.onload = () => {
     const updateTheGraph = (newData, yProperty) => {
 
         const newBarValues = newData.map(crop => crop[yProperty]);
-        const newHighestAmount = Math.round((Math.max(...newBarValues) + 10) * 100) / 100;
-        const newLowestAmount = yProperty === 'totalProfit' ? Math.round((Math.min(...newBarValues) - 100) * 100) / 100 : (Math.min(...newBarValues) - 5);
+        const highestAmount = Math.max(...newBarValues);
+        const lowestAmount = Math.min(...newBarValues);
+        const slightlyAboveHighestAmount = highestAmount > 0 ? highestAmount * 1.1 : highestAmount * 0.9;
+        const slightlyBelowLowestAmount = lowestAmount > 0 ? lowestAmount * .9 : lowestAmount * 1.1;
+        const newHighestAmount = Math.round((slightlyAboveHighestAmount) * 100) / 100;
+        const newLowestAmount = Math.round((slightlyBelowLowestAmount) * 100) / 100;
 
         // update the X axis
         x.domain(newData.map(crop => crop.name));
@@ -256,7 +258,7 @@ window.onload = () => {
             .attr("width", x.bandwidth())
             .attr("height", d => height - y(d[yProperty]))
             .attr('class', d => d.name.replace(/\s/g, '-'))
-            .attr("fill", d => determineBarColor(d[yProperty],(newHighestAmount-10)));
+            .attr("fill", d => determineBarColor(d[yProperty],(highestAmount)));
 
     };
 
@@ -449,7 +451,7 @@ window.onload = () => {
          */
         return {
             roi: roi,
-            dailyROI: (totalProfit / (numberOfGrowingDays - leftoverDays)),
+            dailyROI: (totalProfit / (numberOfGrowingDays - leftoverDays)) / Number($amountOfCrops.value),
         };
     };
 
@@ -475,7 +477,7 @@ window.onload = () => {
      */
     const toggleGraphVisibility = (visible) => {
         $disclaimers.style.display = visible ? 'block' : 'none';
-        $graphButtons.style.display = visible ? 'block' : 'none';
+        $graphSortContainer.style.display = visible ? 'block' : 'none';
         $grid.style.display = visible ? 'inline-block' : 'none';
         $submitButton.textContent = visible ? 'Update Graph' : 'Generate Graph';
         // reset the grid to profits by default when hiding it by switching regions (currently the only way to hide it)
@@ -568,21 +570,9 @@ window.onload = () => {
 
             sortCropsListAndUpdateGrid(cropsListAfterMath, currentGrid);
 
-            $profitsButton.onclick = (event) => {
+            $sortSelect.onchange = (event) => {
                 event.preventDefault();
-                currentGrid = 'totalProfit';
-                sortCropsListAndUpdateGrid(cropsListAfterMath, currentGrid);
-            };
-
-            $experienceButton.onclick = (event) => {
-                event.preventDefault();
-                currentGrid = 'experienceGained';
-                sortCropsListAndUpdateGrid(cropsListAfterMath, currentGrid);
-            };
-
-            $dailyROIButton.onclick = (event) => {
-                event.preventDefault();
-                currentGrid = 'dailyROI';
+                currentGrid = $sortSelect.value;
                 sortCropsListAndUpdateGrid(cropsListAfterMath, currentGrid);
             }
         }
