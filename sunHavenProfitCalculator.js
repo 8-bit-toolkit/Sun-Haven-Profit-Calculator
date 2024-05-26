@@ -1,8 +1,9 @@
 // import { default as crops } from './crops';
 
 /*
- * ROI daily math - https://www.reddit.com/r/StardewValley/comments/4mcxex/stardew_profits_calculator_and_graphing_tool/
- * Add a "how to use" section?
+ * Fix overflow month information - ex: Planting on Summer 20th and running for 30 days should show Summer AND Fall crops
+ * Add "select starting currency" option as an alternative to "amount of crops"
+ * Add a modifiable additional % growth speed and harvest chance to account for some items
  * Fix the www issue on cloudflare - https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-zone-apex/
  * Add renew domain to calendar for next year May 9th 2025
  * Test it a bunch (really test the shortened harvest times math and extra crop math)
@@ -104,19 +105,33 @@ window.onload = () => {
         const roi = Math.round(d.roi * 100) / 100;
         const dailyROI = Math.round(d.dailyROI * 100) / 100;
 
+        // Display harvest information differently for crops that regrow
         const harvestInfo = d.regrows ? `
             <tr>
                 <th scope="row" class="graph-tooltip__table__label">First Harvest:</th>
-                <td class="graph-tooltip__table__data">${d.firstHarvest} days</td>
+                <td class="graph-tooltip__table__data">${d.firstHarvest} Days</td>
             </tr>
             <tr>
                 <th scope="row" class="graph-tooltip__table__label">Regrows After:</th>
-                <td class="graph-tooltip__table__data">${d.regrowRate} day${d.regrowRate === 1 ? '' : 's'}</td>
+                <td class="graph-tooltip__table__data">${d.regrowRate} Day${d.regrowRate === 1 ? '' : 's'}</td>
             </tr>` :
             `<tr>
                 <th scope="row" class="graph-tooltip__table__label">Ready To Harvest Every:</th>
-                <td class="graph-tooltip__table__data">${d.firstHarvest} days</td>
+                <td class="graph-tooltip__table__data">${d.firstHarvest} Days</td>
             </tr>`;
+
+        // Only display season information for sun haven crops
+        const seasonsMap = ['spring','summer','fall','winter'];
+        let seasonsInfo = ``;
+        if($cropsRegion.value === 'sunHaven'){
+            const seasonsArray = seasonsMap.map(season => {
+                return `<tr>
+                    <th scope="row" class="graph-tooltip__table__label">Grows In ${season.charAt(0).toUpperCase() + season.slice(1)}</th>
+                    <td class="graph-tooltip__table__data">${d[season].toString().charAt(0).toUpperCase() + d[season].toString().slice(1)}</td>
+                </tr>`;
+            });
+            seasonsInfo = `${seasonsArray.join('')}`;
+        }
         tooltip
             .html(`
                     <img class="graph-tooltip__crop-image" src="./images/crops/${d.name.replaceAll(' ','-')}.png" />
@@ -164,6 +179,7 @@ window.onload = () => {
                                 <th scope="row" class="graph-tooltip__table__label">Seeds Acquired From:</th>
                                 <td class="graph-tooltip__table__data">${d.acquiredFrom}</td>
                             </tr>
+                            ${seasonsInfo}
                         </tbody>
                     </table>
                 `)
@@ -229,7 +245,10 @@ window.onload = () => {
         const slightlyAboveHighestAmount = highestAmount > 0 ? highestAmount * 1.1 : highestAmount * 0.9;
         const slightlyBelowLowestAmount = lowestAmount > 0 ? lowestAmount * .9 : lowestAmount * 1.1;
         const newHighestAmount = Math.round((slightlyAboveHighestAmount) * 100) / 100;
-        const newLowestAmount = Math.round((slightlyBelowLowestAmount) * 100) / 100;
+        let newLowestAmount = Math.round((slightlyBelowLowestAmount) * 100) / 100;
+
+        // If the lowest amount in the dataset is 0, manually lower it a tiny bit to allow that that bar to show
+        newLowestAmount = (lowestAmount === 0 && newLowestAmount === 0) ? newLowestAmount - 1 : newLowestAmount;
 
         // update the X axis
         x.domain(newData.map(crop => crop.name));
@@ -546,17 +565,21 @@ window.onload = () => {
                     regrows: crop.regrows,
                     regrowRate: crop.regrowRate,
                     acquiredFrom: crop.acquiredFrom,
+                    spring: crop.spring,
+                    summer: crop.summer,
+                    fall: crop.fall,
+                    winter: crop.winter,
                     growingDays: numberOfGrowingDays,
-                    firstHarvest: firstHarvest,
+                    firstHarvest,
                     harvests: numberOfHarvests,
                     experienceGained: experience,
-                    numberOfCropsHarvested: numberOfCropsHarvested,
-                    grossSales: grossSales,
-                    costOfSeeds: costOfSeeds,
-                    leftoverDays: leftoverDays,
-                    roi: roi,
-                    dailyROI: dailyROI,
-                    totalProfit: totalProfit,
+                    numberOfCropsHarvested,
+                    grossSales,
+                    costOfSeeds,
+                    leftoverDays,
+                    roi,
+                    dailyROI,
+                    totalProfit,
                 };
             });
 
