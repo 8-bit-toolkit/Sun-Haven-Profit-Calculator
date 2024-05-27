@@ -249,3 +249,7 @@ body {
     margin: 3px 0;
     font-size: 14px;
 }
+
+.days-amount-maximum {
+    display: block;
+}

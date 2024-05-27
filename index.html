@@ -41,6 +41,20 @@
                             <option value="withergate">Withergate</option>
                         </select>
                     </div>
+                    <div class="configs__config ignore">
+                        <div class="ignore__config checkbox-input ignore-seasons">
+                            <input type="checkbox" class="ignore-seasons-input" name="ignoreSeasons" id="ignoreSeasons"/>
+                            <label class="config-label checkbox-label" for="ignoreSeasons">
+                                Ignore Seasons (Check this if determining profits for a greenhouse setting where seasons will not change)
+                            </label>
+                        </div>
+                        <div class="ignore__config checkbox-input ignore-grapes">
+                            <input type="checkbox" class="ignore-grapes-input" name="ignoreGrapes" id="ignoreGrapes" />
+                            <label class="config-label checkbox-label" for="ignoreGrapes">
+                                Exclude Grapes (Check this if you want to exclude Grapes from the calculator - Grapes cost daily mana to grow)
+                            </label>
+                        </div>
+                    </div>
                     <div class="configs__config planting-date">
                             <label class="config-label" for="plantingDaySelect">
                                 What day are you planting?
@@ -84,18 +98,18 @@
                         </div>
                     <div class="configs__config days-amount">
                             <label class="config-label" for="daysAmountInput">
-                                How Many Days should the calculator run for?
+                                How Many Days should the calculator run for? <span class="days-amount-maximum">*Maximum 111 (1 full year) - to go higher, select "Ignore Seasons" or change regions.</span>
                             </label>
-                            <input type="number" class="days-amount-input" min="1" max="999" value="1" name="daysAmountInput" id="daysAmountInput"/>
+                            <input type="number" class="days-amount-input" min="1" max="111" value="1" name="daysAmountInput" id="daysAmountInput"/>
                         </div>
+                </div>
+                <div class="configs-column">
                     <div class="configs__config crops-amount">
                         <label class="config-label" for="cropsAmountInput">
                             How Many Crops Will You Plant?
                         </label>
                         <input type="number" class="crops-amount-input" min="1" max="999" value="1" name="cropsAmountInput" id="cropsAmountInput"/>
                     </div>
-                </div>
-                <div class="configs-column">
                     <div class="configs__config tiller-tip">
                         <label class="config-label" for="tillerTipSelect">
                             Tiller Tip Level? (provides 0 / 4 / 7 / 10 extra gold per crop sold)
@@ -128,20 +142,6 @@
                             <option value="0.08">2</option>
                             <option value="0.12">3</option>
                         </select>
-                    </div>
-                    <div class="configs__config ignore">
-                        <div class="ignore__config checkbox-input ignore-seasons">
-                            <input type="checkbox" class="ignore-seasons-input" name="ignoreSeasons" id="ignoreSeasons"/>
-                            <label class="config-label checkbox-label" for="ignoreSeasons">
-                                Ignore Seasons (Check this if determining profits for a greenhouse setting where seasons will not change)
-                            </label>
-                        </div>
-                        <div class="ignore__config checkbox-input ignore-grapes">
-                            <input type="checkbox" class="ignore-grapes-input" name="ignoreGrapes" id="ignoreGrapes" />
-                            <label class="config-label checkbox-label" for="ignoreGrapes">
-                                Exclude Grapes (Check this if you want to exclude Grapes from the calculator - Grapes cost daily mana to grow)
-                            </label>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -252,6 +252,9 @@
             </li>
             <li class="disclaimer">
                 This calculator determines an AVERAGE profit. Many skills/totems/fertilizers give a "chance" to get extra crops, so your personal results may differ from these averages.
+            </li>
+            <li class="disclaimer">
+                When considering "amounts of days" that the calculator will run, if the calculation will run multiple seasons, only the FIRST eligible growing period for a crop is considered. Ex: Starting the calculator on Summer 15th, and running for 88 days (until Spring 15th) for a crop that grows in both Summer and Spring will only calculate for the initial Summer growth period.
             </li>
         </ul>
     </div>

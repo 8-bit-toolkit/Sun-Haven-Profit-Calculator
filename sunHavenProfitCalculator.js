@@ -35,6 +35,7 @@ window.onload = () => {
     const $plantingDay = document.getElementsByClassName('planting-day-select')[0];
     const $plantingSeason = document.getElementsByClassName('planting-season-select')[0];
     const $amountOfDays = document.getElementsByClassName('days-amount-input')[0];
+    const $amountOfDaysMaxText = document.getElementsByClassName('days-amount-maximum')[0];
     const $amountOfCrops = document.getElementsByClassName('crops-amount-input')[0];
     const $fertilizer = document.getElementsByClassName('fertilizer-select')[0];
     const $fireTotem = document.getElementsByClassName('fire-fertilizer-totem-input')[0];
@@ -291,41 +292,54 @@ window.onload = () => {
         const plantingDay = Number($plantingDay.value);
         const amountOfDays = Number($amountOfDays.value);
         const seasonMap = ['spring', 'summer', 'fall', 'winter'];
-
-        // This crop cannot be planted in the selected season, early terminate
-        if(!crop[seasonMap[plantingSeason]]){
-            return 0;
-        }
+        const canBePlantedInCurrentSeason = crop[seasonMap[plantingSeason]];
 
         let numberOfDaysRemainingThisSeason = 28 - plantingDay;
 
-        // if the period of time this calculator is running for will not leave this season, early terminate.
         if (numberOfDaysRemainingThisSeason > amountOfDays) {
-            return amountOfDays;
+            /*
+             * If the time will not leave this season, and the crop CAN be planted in this season, then the growing days
+             * is just the amount of time entered.
+             *
+             * If the time will not leave this season, and the crop CANNOT be planted in this season, then the growing
+             * days is 0.
+             */
+            return canBePlantedInCurrentSeason ? amountOfDays : 0;
         }
 
-        // initialize the number of growing days to the remaining days in this season
-        let numberOfGrowingDays = numberOfDaysRemainingThisSeason;
+        // the days for this season have been considered.
+        let numberOfDaysConsidered = numberOfDaysRemainingThisSeason;
+
+        /*
+         * if the crop CAN be grown this season, initialize the number of growing days to the days remaining, if not
+         * initialize it to -1 to account for the 1 day of "no growth" spent entering the season when it can grow
+         */
+        let numberOfGrowingDays = canBePlantedInCurrentSeason ? numberOfDaysRemainingThisSeason : -1;
 
         /*
          * @param {String} seasonToBeTested - the current season to check if this crop can be grown
          * @return {Boolean} - Does nothing but terminate the recursive season checking
          */
         const testSeason = (seasonToBeTested) => {
-            // don't add any days to the numberOfGrowingDays if this month is not supported
-            if(!crop[seasonMap[seasonToBeTested]]) {
+            const daysRemaining = amountOfDays - numberOfDaysConsidered;
+
+            // Add the days considered for this month
+            numberOfDaysConsidered += Math.min(daysRemaining, 28);
+
+            // if the crop will grow in this season
+            if (crop[seasonMap[seasonToBeTested]]) {
+                // add either the full month, or as much of it as the calculator will run for
+                numberOfGrowingDays += Math.min(daysRemaining, 28);
+            } else if(numberOfGrowingDays > 0) {
+                // the crop will not grow in this season, and has already had a period of growth on in the calculation
                 return false;
             }
-            /*
-             * if adding this season's worth of days would exceed the time period for the calculation, stop here and
-             * assume this crop will grow for the entire amount of days. Otherwise, add 28 days for this season
-             */
-            if( amountOfDays < numberOfGrowingDays + 28){
-                numberOfGrowingDays = amountOfDays;
+            // if we will cross into another month, test it. Otherwise, quit here
+            if (daysRemaining > 28) {
+                testSeason((seasonToBeTested + 1) % 4);
+            } else {
                 return false;
             }
-            numberOfGrowingDays += 28;
-            testSeason((seasonToBeTested + 1) % 4);
         }
 
         // check how many months this crop can be grown starting with next month
@@ -470,7 +484,7 @@ window.onload = () => {
          */
         return {
             roi: roi,
-            dailyROI: (totalProfit / (numberOfGrowingDays - leftoverDays)) / Number($amountOfCrops.value),
+            dailyROI: (totalProfit / (Number($amountOfDays.value) - leftoverDays)) / Number($amountOfCrops.value),
         };
     };
 
@@ -517,13 +531,33 @@ window.onload = () => {
             // show sun haven-specific inputs
             $tillerTipInput.style.display = 'block';
             $ignoreInputs.style.display = 'block';
+            $amountOfDaysMaxText.style.display = 'block';
+            $amountOfDays.value = 0;
+            $amountOfDays.max = 111;
         } else {
             // hide and clear sun haven-specific inputs
             $tillerTipInput.style.display = 'none';
             $ignoreInputs.style.display = 'none';
+            $amountOfDaysMaxText.style.display = 'none';
             $tillerTipLevel.value = '0';
+            $amountOfDays.value = 0;
+            $amountOfDays.max = 999;
             $ignoreSeasons.checked = false;
             $ignoreGrapes.checked = false;
+        }
+    };
+
+    /*
+     * When the "Ignore Seasons" checkbox is checked, change the "amount of days" input's maximum
+     */
+    $ignoreSeasons.onchange = () => {
+        $amountOfDays.value = 0;
+        if($ignoreSeasons.checked) {
+            $amountOfDaysMaxText.style.display = 'none';
+            $amountOfDays.max = 999;
+        } else {
+            $amountOfDaysMaxText.style.display = 'block';
+            $amountOfDays.max = 111;
         }
     };
 
