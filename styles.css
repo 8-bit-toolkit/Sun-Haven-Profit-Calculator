@@ -253,3 +253,11 @@ body {
 .days-amount-maximum {
     display: block;
 }
+
+.crops-amount .crops-amount-currency {
+    display: none;
+}
+
+.crops-amount .change-crops-amount-button {
+    margin: 10px 0;
+}

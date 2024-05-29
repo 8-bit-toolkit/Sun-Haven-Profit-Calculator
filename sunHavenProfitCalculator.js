@@ -1,8 +1,6 @@
 // import { default as crops } from './crops';
 
 /*
- * Fix overflow month information - ex: Planting on Summer 20th and running for 30 days should show Summer AND Fall crops
- * Add "select starting currency" option as an alternative to "amount of crops"
  * Add a modifiable additional % growth speed and harvest chance to account for some items
  * Fix the www issue on cloudflare - https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-zone-apex/
  * Add renew domain to calendar for next year May 9th 2025
@@ -37,6 +35,10 @@ window.onload = () => {
     const $amountOfDays = document.getElementsByClassName('days-amount-input')[0];
     const $amountOfDaysMaxText = document.getElementsByClassName('days-amount-maximum')[0];
     const $amountOfCrops = document.getElementsByClassName('crops-amount-input')[0];
+    const $cropsAmountCurrency = document.getElementsByClassName('crops-amount-currency')[0];
+    const $cropsAmountManual = document.getElementsByClassName('crops-amount-manual')[0];
+    const $changeCropsAmountButton = document.getElementsByClassName('change-crops-amount-button')[0];
+    const $amountOfStartingCurrency = document.getElementsByClassName('starting-currency-amount-input')[0];
     const $fertilizer = document.getElementsByClassName('fertilizer-select')[0];
     const $fireTotem = document.getElementsByClassName('fire-fertilizer-totem-input')[0];
     const $springTotem = document.getElementsByClassName('spring-totem-input')[0];
@@ -57,6 +59,7 @@ window.onload = () => {
     // state variables
     let currentGrid = 'totalProfit';
     let currentRegion = 'sunHaven';
+    let currentCropsAmountDeterminer = 'manual';
 
     // set the dimensions and margins of the graph
     const margin = {top: 30, right: 30, bottom: 70, left: 60},
@@ -105,6 +108,17 @@ window.onload = () => {
         const totalProfit = Math.round(d.totalProfit * 100) / 100;
         const roi = Math.round(d.roi * 100) / 100;
         const dailyROI = Math.round(d.dailyROI * 100) / 100;
+
+        const cropAmountInfo = currentCropsAmountDeterminer === 'manual' ? `` : `
+            <tr>
+                <th scope="row" class="graph-tooltip__table__label">Amount Of Crops Initially Planted:</th>
+                <td class="graph-tooltip__table__data">${d.numberOfCropsPlanted}</td>
+            </tr>
+            <tr>
+                <th scope="row" class="graph-tooltip__table__label">Unused Currency After Buying First Seeds:</th>
+                <td class="graph-tooltip__table__data">${d.leftoverStartingCurrency}</td>
+            </tr>
+        `;
 
         // Display harvest information differently for crops that regrow
         const harvestInfo = d.regrows ? `
@@ -176,6 +190,7 @@ window.onload = () => {
                                 <th scope="row" class="graph-tooltip__table__label">Total Seed Cost:</th>
                                 <td class="graph-tooltip__table__data">${d.costOfSeeds}</td>
                             </tr>
+                            ${cropAmountInfo}
                             <tr>
                                 <th scope="row" class="graph-tooltip__table__label">Seeds Acquired From:</th>
                                 <td class="graph-tooltip__table__data">${d.acquiredFrom}</td>
@@ -280,6 +295,25 @@ window.onload = () => {
             .attr('class', d => d.name.replace(/\s/g, '-'))
             .attr("fill", d => determineBarColor(d[yProperty],(highestAmount)));
 
+    };
+
+    /*
+     * @param {Object} crop - The crop being currently evaluated
+     * @return {Object} - The number of crops able to be planted, and the leftover amount of currency
+     */
+    const calculateNumberOfCropsPlanted = (crop) => {
+        // if the user has manually entered how many crops to plant, quit here
+        if(currentCropsAmountDeterminer === 'manual') {
+            return {
+                numberOfCropsPlanted: Number($amountOfCrops.value),
+                leftoverStartingCurrency: 0,
+            };
+        }
+
+        return {
+            numberOfCropsPlanted: Math.floor(Number($amountOfStartingCurrency.value) / crop.seedPrice),
+            leftoverStartingCurrency: Number($amountOfStartingCurrency.value) % crop.seedPrice,
+        }
     };
 
     /*
@@ -434,11 +468,12 @@ window.onload = () => {
     /*
      * @param {Object} crop - The crop being currently evaluated
      * @param {Number} numberOfHarvests - The amount of times this crop will be harvested
+     * @param {Number} numberOfCropsPlanted - the total amount of this crop that was planted in this calculation
      * @return {Number} - The total amount of farming xp gained for this crop
      */
-    const calculateAmountOfXP = (crop, numberOfHarvests) => {
+    const calculateAmountOfXP = (crop, numberOfHarvests, numberOfCropsPlanted) => {
         const totemModifier = $farmingTotem.checked ? 2 : 0;
-        return (crop.experience + totemModifier) * numberOfHarvests;
+        return ((crop.experience + totemModifier) * numberOfHarvests) * numberOfCropsPlanted;
     };
 
     /*
@@ -477,14 +512,14 @@ window.onload = () => {
      * @returns {Object} - The ROI and Daily ROI for this crop
      */
     const calculateROI = (crop, firstHarvest, numberOfGrowingDays, leftoverDays, grossSales, costOfSeeds, totalProfit) => {
-        const roi =  ((grossSales / costOfSeeds) * 100) - 100;
+        const roi =  Math.round((totalProfit / costOfSeeds) * 100);
         /*
          * only calculate daily ROI for the USED days of the calculators runtime. Otherwise, you could see a less
          * accurate daily ROI if there are unused days left for a specific crop
          */
         return {
             roi: roi,
-            dailyROI: (totalProfit / (Number($amountOfDays.value) - leftoverDays)) / Number($amountOfCrops.value),
+            dailyROI: (roi / (Number($amountOfDays.value) - leftoverDays)),
         };
     };
 
@@ -562,6 +597,27 @@ window.onload = () => {
     };
 
     /*
+     * When the "Toggle Crops Amount Input" button in clicked, toggle the crops amount determining input
+     */
+    $changeCropsAmountButton.onclick = (event) => {
+        event.preventDefault();
+        currentCropsAmountDeterminer = currentCropsAmountDeterminer === 'manual' ? 'currency' : 'manual';
+        $amountOfCrops.value = 1;
+        $amountOfStartingCurrency.value = 1;
+
+        // the user has selected to input the amount of crops manually
+        if(currentCropsAmountDeterminer === 'manual'){
+            $changeCropsAmountButton.textContent = 'Calculate Amount Of Crops By Entering A Starting Currency';
+            $cropsAmountCurrency.style.display = 'none';
+            $cropsAmountManual.style.display = 'block';
+        } else { // the user has selected to determine the amount of crops by entering an amount of currency
+            $changeCropsAmountButton.textContent = 'Manually Enter The Amount Of Crops To Plant';
+            $cropsAmountCurrency.style.display = 'block';
+            $cropsAmountManual.style.display = 'none';
+        }
+    };
+
+    /*
      * When the "Update Graph" button is clicked
      */
     $submitButton.onclick = (event) => {
@@ -575,23 +631,17 @@ window.onload = () => {
 
             // iterate through each crop
             let cropsListAfterMath = JSON.parse(cropsMap[currentRegion].cropsJSON).map(crop => {
+                const { numberOfCropsPlanted, leftoverStartingCurrency } = calculateNumberOfCropsPlanted(crop);
+                if(numberOfCropsPlanted === 0) { return { invalid: true }; }
                 const numberOfGrowingDays = $ignoreSeasons.checked ? Number($amountOfDays.value) : calculateNumberOfGrowingDays(crop);
-                if (numberOfGrowingDays === 0){
-                    return {
-                        invalid: true,
-                    };
-                }
+                if (numberOfGrowingDays === 0) { return { invalid: true }; }
                 const firstHarvest = calculateFirstHarvest(crop, numberOfGrowingDays);
-                if (firstHarvest === 0) {
-                    return {
-                        invalid: true,
-                    };
-                }
+                if (firstHarvest === 0) { return { invalid: true }; }
                 const { numberOfHarvests, leftoverDays } = calculateNumberOfHarvests(crop, firstHarvest, numberOfGrowingDays);
-                const experience = calculateAmountOfXP(crop, numberOfHarvests);
-                const numberOfCropsHarvested = calculateNumberOfCropsHarvested(crop, numberOfHarvests, Number($amountOfCrops.value));
+                const experience = calculateAmountOfXP(crop, numberOfHarvests, numberOfCropsPlanted);
+                const numberOfCropsHarvested = calculateNumberOfCropsHarvested(crop, numberOfHarvests, numberOfCropsPlanted);
                 const grossSales = calculateGrossSales(crop, numberOfCropsHarvested);
-                const costOfSeeds = calculateCostOfSeeds(crop,numberOfHarvests,Number($amountOfCrops.value));
+                const costOfSeeds = calculateCostOfSeeds(crop, numberOfHarvests, numberOfCropsPlanted);
                 const totalProfit = grossSales - costOfSeeds;
                 const { roi, dailyROI } = calculateROI(crop, firstHarvest, numberOfGrowingDays, leftoverDays, grossSales, costOfSeeds, totalProfit);
                 return {
@@ -614,6 +664,8 @@ window.onload = () => {
                     roi,
                     dailyROI,
                     totalProfit,
+                    numberOfCropsPlanted,
+                    leftoverStartingCurrency,
                 };
             });
 

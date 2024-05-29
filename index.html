@@ -45,13 +45,13 @@
                         <div class="ignore__config checkbox-input ignore-seasons">
                             <input type="checkbox" class="ignore-seasons-input" name="ignoreSeasons" id="ignoreSeasons"/>
                             <label class="config-label checkbox-label" for="ignoreSeasons">
-                                Ignore Seasons (Check this if determining profits for a greenhouse setting where seasons will not change)
+                                Ignore Seasons (Check this if planting in a greenhouse)
                             </label>
                         </div>
                         <div class="ignore__config checkbox-input ignore-grapes">
                             <input type="checkbox" class="ignore-grapes-input" name="ignoreGrapes" id="ignoreGrapes" />
                             <label class="config-label checkbox-label" for="ignoreGrapes">
-                                Exclude Grapes (Check this if you want to exclude Grapes from the calculator - Grapes cost daily mana to grow)
+                                Exclude Grapes (Grapes cost daily mana to grow)
                             </label>
                         </div>
                     </div>
@@ -105,10 +105,21 @@
                 </div>
                 <div class="configs-column">
                     <div class="configs__config crops-amount">
-                        <label class="config-label" for="cropsAmountInput">
-                            How Many Crops Will You Plant?
-                        </label>
-                        <input type="number" class="crops-amount-input" min="1" max="999" value="1" name="cropsAmountInput" id="cropsAmountInput"/>
+                        <div class="crops-amount-manual">
+                            <label class="config-label" for="cropsAmountInput">
+                                How Many Crops Will You Plant?
+                            </label>
+                            <input type="number" class="crops-amount-input" min="1" max="999" value="1" name="cropsAmountInput" id="cropsAmountInput"/>
+                        </div>
+                        <div class="crops-amount-currency">
+                            <label class="config-label" for="startingCurrencyAmountInput">
+                                Enter A Starting Currency Amount To Determine Amount Of Crops
+                            </label>
+                            <input type="number" class="starting-currency-amount-input" min="1" max="999999" value="1" name="startingCurrencyAmountInput" id="startingCurrencyAmountInput"/>
+                        </div>
+                        <button class="change-crops-amount-button">
+                            Calculate Amount Of Crops With A Starting Currency Amount Instead
+                        </button>
                     </div>
                     <div class="configs__config tiller-tip">
                         <label class="config-label" for="tillerTipSelect">
