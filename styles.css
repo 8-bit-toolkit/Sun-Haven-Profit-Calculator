@@ -202,13 +202,13 @@ body {
     }
 }
 
-.totem-fieldset {
+.totem-fieldset, .item-bonuses-fieldset {
     margin: 0;
     padding: 0;
     border: 0;
 }
 
-.totem-list {
+.totem-list, .item-bonuses-list {
     list-style: none;
     margin: 10px 0 10px 5px;
     padding: 0;
@@ -260,4 +260,8 @@ body {
 
 .crops-amount .change-crops-amount-button {
     margin: 10px 0;
+}
+
+.item-bonus-list-item .config-label {
+    display: inline-block;
 }

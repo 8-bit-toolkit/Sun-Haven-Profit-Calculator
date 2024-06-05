@@ -102,6 +102,33 @@
                             </label>
                             <input type="number" class="days-amount-input" min="1" max="111" value="1" name="daysAmountInput" id="daysAmountInput"/>
                         </div>
+                    <div class="configs__config totem">
+                        <fieldset class="totem-fieldset">
+                            <legend>
+                                Select Totems:
+                            </legend>
+                            <ul class="totem-list">
+                                <li class="checkbox-input">
+                                    <input type="checkbox" class="fire-fertilizer-totem-input" name="fireFertilizerTotem" id="fireFertilizerTotem" />
+                                    <label class="config-label checkbox-label" for="fireFertilizerTotem">
+                                        Fire Fertilizer Totem (15% increased growth speed)
+                                    </label>
+                                </li>
+                                <li class="checkbox-input">
+                                    <input type="checkbox" class="spring-totem-input" name="springTotem" id="springTotem" />
+                                    <label class="config-label checkbox-label" for="springTotem">
+                                        Spring Totem (4% extra crop chance when harvested)
+                                    </label>
+                                </li>
+                                <li class="checkbox-input">
+                                    <input type="checkbox" class="farming-totem-input" name="farmingTotem" id="farmingTotem" />
+                                    <label class="config-label checkbox-label" for="farmingTotem">
+                                        Farming Totem (Extra 2 farming xp per harvest)
+                                    </label>
+                                </li>
+                            </ul>
+                        </fieldset>
+                    </div>
                 </div>
                 <div class="configs-column">
                     <div class="configs__config crops-amount">
@@ -154,6 +181,27 @@
                             <option value="0.12">3</option>
                         </select>
                     </div>
+                    <div class="configs__config item-bonuses">
+                        <fieldset class="item-bonuses-fieldset">
+                            <legend>
+                                Manually Add Misc Bonuses From Items Or Buffs:
+                            </legend>
+                            <ul class="item-bonuses-list">
+                                <li class="item-bonus-list-item">
+                                    <input type="number" class="item-bonus-extra-crop-chance" min="0" max="25" value="0" name="itemBonusExtraCropChance" id="itemBonusExtraCropChance"/>
+                                    <label class="config-label" for="itemBonusExtraCropChance">
+                                        Extra Crop Chance %
+                                    </label>
+                                </li>
+                                <li class="item-bonus-list-item">
+                                    <input type="number" class="item-bonus-extra-xp" min="0" max="50" value="0" name="itemBonusExtraXp" id="itemBonusExtraXp"/>
+                                    <label class="config-label" for="itemBonusExtraXp">
+                                        Extra Farming XP Per Harvest
+                                    </label>
+                                </li>
+                            </ul>
+                        </fieldset>
+                    </div>
                 </div>
             </div>
             <div class="configs__config fertilizer">
@@ -171,33 +219,6 @@
                     <option value="advMagic">Advanced Magic (25% extra crop chance when harvested, 50% increased growth speed)</option>
                     <option value="other">Other (Other fertilizers still affect profit/xp by triggering "Fertile land" skill)</option>
                 </select>
-            </div>
-            <div class="configs__config totem">
-                <fieldset class="totem-fieldset">
-                    <legend>
-                        Select Totems:
-                    </legend>
-                    <ul class="totem-list">
-                        <li class="checkbox-input">
-                            <input type="checkbox" class="fire-fertilizer-totem-input" name="fireFertilizerTotem" id="fireFertilizerTotem" />
-                            <label class="config-label checkbox-label" for="fireFertilizerTotem">
-                                Fire Fertilizer Totem (15% increased growth speed)
-                            </label>
-                        </li>
-                        <li class="checkbox-input">
-                            <input type="checkbox" class="spring-totem-input" name="springTotem" id="springTotem" />
-                            <label class="config-label checkbox-label" for="springTotem">
-                                Spring Totem (4% extra crop chance when harvested)
-                            </label>
-                        </li>
-                        <li class="checkbox-input">
-                            <input type="checkbox" class="farming-totem-input" name="farmingTotem" id="farmingTotem" />
-                            <label class="config-label checkbox-label" for="farmingTotem">
-                                Farming Totem (Extra 2 farming xp per harvest)
-                            </label>
-                        </li>
-                    </ul>
-                </fieldset>
             </div>
         </div>
     </div>
@@ -247,16 +268,13 @@
                 Crops are harvested immediately when grown, then the same amount are replanted the same day
             </li>
             <li class="disclaimer">
-                Fertilizers and Totems can have stacking effects, but multiple Totems with similar effects do not stack.
-            </li>
-            <li class="disclaimer">
                 Any specified Fertilizer or Totems affect ALL crops in the calculation
             </li>
             <li class="disclaimer">
-                Fertilizers and Totems applied to crops that regrow, only affect the INITIAL harvest, not subsequent ones (I've personally confirmed this for "growth rate" fertilizers/totems, but need dev confirmation for "extra crop chance" fertilizers/totems)
+                Fertilizers and Totems applied to crops that regrow, only affect the INITIAL harvest, not subsequent ones.
             </li>
             <li class="disclaimer">
-                A crop that regrows that has been fertilized will NO LONGER activate the "Fertile Land" skill after its first harvest, even if it still appears to be fertilized (need dev confirmation on this)
+                A crop that regrows that has been fertilized will NO LONGER activate the "Fertile Land" skill after its first harvest, even if it still appears to be fertilized.
             </li>
             <li class="disclaimer">
                 When determining crop growth speed and extra harvest chance: any relevant Skills, Totems, or Fertilizers have their effects applied to the base crop numbers in an additive manner rather than multiplicative

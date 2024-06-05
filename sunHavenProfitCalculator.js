@@ -1,7 +1,7 @@
 // import { default as crops } from './crops';
 
 /*
- * Add a modifiable additional % growth speed and harvest chance to account for some items
+ * Totems can stack?? Need to investigate this further. What happens when several fire fertilizer totems combine to be 100%?
  * Fix the www issue on cloudflare - https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-zone-apex/
  * Add renew domain to calendar for next year May 9th 2025
  * Test it a bunch (really test the shortened harvest times math and extra crop math)
@@ -55,6 +55,8 @@ window.onload = () => {
     const $grid = document.getElementById('my_dataviz');
     const $disclaimers = document.getElementsByClassName('disclaimers-container')[0];
     const $graphSortContainer = document.getElementsByClassName('graph-sort-container')[0];
+    const $itemBonusExtraCropChance = document.getElementsByClassName('item-bonus-extra-crop-chance')[0];
+    const $itemBonusExtraXp = document.getElementsByClassName('item-bonus-extra-xp')[0];
 
     // state variables
     let currentGrid = 'totalProfit';
@@ -451,7 +453,7 @@ window.onload = () => {
         const fertileLandModifier = $fertilizer.value !== 'none' ? Number($fertileLandLevel.value) : 0;
 
         const totalChanceToGetExtraRegrowCrop = propagationModifier; //  + fertileLandModifier;
-        const totalChanceToGetExtraCrop = fertilizerModifier + totemModifier + propagationModifier + fertileLandModifier;
+        const totalChanceToGetExtraCrop = fertilizerModifier + totemModifier + propagationModifier + fertileLandModifier + (Number($itemBonusExtraCropChance.value) * .01);
 
         const normalCrops = (crop.cropsPerHarvest * numberOfHarvests);
         let extraCrops;
@@ -473,7 +475,7 @@ window.onload = () => {
      */
     const calculateAmountOfXP = (crop, numberOfHarvests, numberOfCropsPlanted) => {
         const totemModifier = $farmingTotem.checked ? 2 : 0;
-        return ((crop.experience + totemModifier) * numberOfHarvests) * numberOfCropsPlanted;
+        return ((crop.experience + totemModifier + Number($itemBonusExtraXp.value)) * numberOfHarvests) * numberOfCropsPlanted;
     };
 
     /*
